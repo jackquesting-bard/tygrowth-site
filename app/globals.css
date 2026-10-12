@@ -1,0 +1,29 @@
+@tailwind base;
+@tailwind components;
+@tailwind utilities;
+
+:root{
+  --ink:#141B2E; --navy-deep:#1B2B47; --navy-blue:#22456B;
+  --heading-navy:#1F3A5F; --slate-body:#33404F; --muted:#6A7789;
+  --hairline:#E4E9ED; --surface-light:#F6F8FA; --white:#FFFFFF;
+  --teal-primary:#2E8B8B; --teal-bright:#3FB3AC; --teal-tint:#EAF4F3;
+  --text-on-dark:#C9D6E5;
+  --gradient-brand:linear-gradient(135deg,#141B2E 0%,#1B2B47 55%,#22456B 100%);
+  --shadow-rest:0 1px 2px rgba(20,27,46,.06);
+  --shadow-elevated:0 10px 30px rgba(20,27,46,.08);
+  /* LinkedIn-themed page */
+  --li-blue:#0A66C2; --li-bg:#F4F2EE; --li-border:#E8E6E1;
+}
+
+html,body{padding:0;margin:0}
+*{box-sizing:border-box}
+body{background:var(--surface-light);color:var(--slate-body);font-family:var(--font-inter),Inter,system-ui,-apple-system,"Segoe UI",Roboto,sans-serif;-webkit-font-smoothing:antialiased}
+a{color:var(--teal-primary);transition:color .15s ease}
+a:hover{color:var(--teal-bright)}
+
+/* LinkedIn-themed page helpers (need :hover, so they live here) */
+.li-search{background:#EDF3F8;border:none;border-radius:6px;padding:9px 12px 9px 40px;font-size:14px;font-family:inherit;width:100%;color:rgba(0,0,0,.7)}
+.li-search::placeholder{color:rgba(0,0,0,.6)}
+.li-reaction{display:flex;align-items:center;justify-content:center;gap:8px;flex:1;padding:10px 4px;border-radius:6px;color:rgba(0,0,0,.6);font-weight:600;font-size:14px;cursor:pointer;transition:background .15s ease}
+.li-reaction:hover{background:rgba(0,0,0,.06)}
+.li-icon-btn{display:flex;flex-direction:column;align-items:center;justify-content:center;gap:2px;color:rgba(0,0,0,.6);font-size:12px;min-width:56px;cursor:default;user-select:none}
