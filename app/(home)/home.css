@@ -1,0 +1,123 @@
+@import "tailwindcss";
+
+/* =====================================================================
+   TY Growth home page: "ops" theme
+   Additive only. Every token is new and prefixed with "ops", and the
+   variables only exist inside .theme-ops, so /linkedin is untouched.
+   ===================================================================== */
+
+.theme-ops {
+  --ops-ink: #0b2b23;
+  --ops-text: #0c3429;
+  --ops-forest: #3b5842;
+  --ops-forest-mid: #6b846a;
+  --ops-sage-soft: #9bac93;
+  --ops-cream: #f6f3e7;
+  --ops-card: #fbf9f1;
+  --ops-line: #acba93;
+  --ops-node: #6d8c6b;
+  --ops-moss: #59762c;
+  --ops-sprout: #91c04a;
+  --ops-lime: #c7f17c;
+
+  background-color: var(--ops-cream);
+  color: var(--ops-text);
+}
+
+@theme inline {
+  --color-ops-ink: var(--ops-ink);
+  --color-ops-text: var(--ops-text);
+  --color-ops-forest: var(--ops-forest);
+  --color-ops-forest-mid: var(--ops-forest-mid);
+  --color-ops-sage-soft: var(--ops-sage-soft);
+  --color-ops-cream: var(--ops-cream);
+  --color-ops-card: var(--ops-card);
+  --color-ops-line: var(--ops-line);
+  --color-ops-node: var(--ops-node);
+  --color-ops-moss: var(--ops-moss);
+  --color-ops-sprout: var(--ops-sprout);
+  --color-ops-lime: var(--ops-lime);
+
+  --font-ops-heading: var(--font-ops-jakarta), ui-sans-serif, system-ui, sans-serif;
+  --font-ops-body: var(--font-ops-inter), ui-sans-serif, system-ui, sans-serif;
+}
+
+html:has(.theme-ops) {
+  scroll-behavior: smooth;
+}
+
+/* Left-side hero gradient (desktop). Fades out toward the bottom of the hero. */
+.theme-ops .ops-hero-gradient {
+  background: linear-gradient(
+    90deg,
+    var(--ops-forest) 0%,
+    var(--ops-forest-mid) 34%,
+    var(--ops-sage-soft) 64%,
+    var(--ops-cream) 100%
+  );
+  -webkit-mask-image: linear-gradient(180deg, #000 0%, #000 62%, transparent 100%);
+  mask-image: linear-gradient(180deg, #000 0%, #000 62%, transparent 100%);
+}
+
+/* Top-left corner glow (mobile and tablet). */
+.theme-ops .ops-corner-glow {
+  background: radial-gradient(
+    circle at 0% 0%,
+    color-mix(in oklab, var(--ops-forest-mid) 55%, transparent) 0%,
+    color-mix(in oklab, var(--ops-sage-soft) 35%, transparent) 38%,
+    transparent 70%
+  );
+}
+
+/* Grain overlay */
+.theme-ops .ops-grain {
+  background-image: url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' width='180' height='180'%3E%3Cfilter id='n'%3E%3CfeTurbulence type='fractalNoise' baseFrequency='0.85' numOctaves='3' stitchTiles='stitch'/%3E%3CfeColorMatrix type='saturate' values='0'/%3E%3C/filter%3E%3Crect width='100%25' height='100%25' filter='url(%23n)'/%3E%3C/svg%3E");
+  background-size: 180px 180px;
+}
+
+/* Slow pulse on lime nodes */
+@keyframes ops-pulse {
+  0%,
+  100% {
+    opacity: 0.55;
+    transform: scale(0.9);
+  }
+  50% {
+    opacity: 1;
+    transform: scale(1.12);
+  }
+}
+
+.theme-ops .ops-pulse {
+  animation: ops-pulse 3s ease-in-out infinite;
+  transform-box: fill-box;
+  transform-origin: center;
+}
+
+/* Visible focus: lime ring with an ink edge so it holds up on cream and on dark. */
+.theme-ops :is(a, button, summary):focus-visible {
+  outline: 2px solid transparent;
+  outline-offset: 2px;
+  box-shadow:
+    0 0 0 2px var(--ops-cream),
+    0 0 0 4px var(--ops-lime),
+    0 0 0 5.5px var(--ops-ink);
+}
+
+.theme-ops .ops-dark :is(a, button, summary):focus-visible {
+  box-shadow:
+    0 0 0 2px var(--ops-ink),
+    0 0 0 4px var(--ops-lime);
+}
+
+@media (prefers-reduced-motion: reduce) {
+  html:has(.theme-ops) {
+    scroll-behavior: auto;
+  }
+  .theme-ops .ops-pulse {
+    animation: none;
+  }
+  .theme-ops * {
+    transition-duration: 0.01ms !important;
+  }
+}
