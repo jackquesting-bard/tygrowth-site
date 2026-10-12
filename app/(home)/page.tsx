@@ -43,7 +43,7 @@ const COMMUNITY_URL = "https://tally.so/r/XxVB6O";
 
 /* Pull quote under the Simply Jess case card. The block hides itself if this is empty. */
 const JESS_QUOTE =
-  "My problem was always not getting the content. My problem was executing the content and going into social media. So by us doing this and getting into a systematic flow… I mean, game changer.";
+  "Having everything structured so properly that we just do one click and it’s done.";
 const SHOW_TESTIMONIAL = JESS_QUOTE.trim() !== "";
 
 /* Logos: true shows the image from /public/logos/. false shows the name as styled text instead. */
