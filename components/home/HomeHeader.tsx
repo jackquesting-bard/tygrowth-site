@@ -7,8 +7,8 @@ import { Wordmark } from "./motifs";
 import { BOOKING_URL, btnPrimaryBase } from "./shared";
 
 const NAV = [
+  { href: "#what-i-do", label: "What I do" },
   { href: "#how-it-works", label: "How it works" },
-  { href: "#guarantee", label: "Guarantee" },
   { href: "#results", label: "Results" },
   { href: "#faq", label: "FAQ" },
 ];

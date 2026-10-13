@@ -29,19 +29,16 @@ import {
 
 /* =====================================================================
    OFFER DETAILS
-   Edit these in one place. Any value written in [BRACKETS] is treated as
-   a placeholder and shows on the page with a lime highlight.
+   Edit these in one place.
    ===================================================================== */
-const PRICE_INSTALL = "$25,000";
-const PRICE_PILOT = "$10,000";
-const INSTALL_SLOTS = "4";
-const DAY_30_SYSTEMS = "Your CRM cleaned up, client onboarding, lead follow-up, and weekly reporting";
-const HOURS_BACK = "10";
-const DAY_180_TARGET = "15 hours a week back, and your team runs it without you";
-const CASE_RESULT = "2,446 contacts opted in to email and ready for her next campaign.";
 const COMMUNITY_URL = "https://tally.so/r/XxVB6O";
 
-/* Pull quote under the Simply Jess case card. The block hides itself if this is empty. */
+/* Simply Jess case study numbers. Swap in the win-back campaign results once they're in. */
+const CASE_STAT = "4 → 1";
+const CASE_STAT_LABEL = "contact lists merged into one CRM";
+const CASE_OPTED_IN = "2,446";
+
+/* Pull quote under the Trusted by strip. The block hides itself if this is empty. */
 const JESS_QUOTE =
   "My problem was always not getting the content. My problem was executing the content and going into social media. So by us doing this and getting into a systematic flow… I mean, game changer.";
 const SHOW_TESTIMONIAL = JESS_QUOTE.trim() !== "";
@@ -56,10 +53,6 @@ const CLIENT_LINKS = {
   visualsByJess: "https://visualsbyjess.com/",
   becks: "https://www.instagram.com/becksthesocial/",
 };
-
-/* The guarantee promise. Used word for word in the hero, the guarantee section, and the FAQ. */
-const GUARANTEE =
-  "If we miss the targets we set at kickoff, I keep working at no extra cost until we hit them.";
 
 const jakarta = Plus_Jakarta_Sans({
   subsets: ["latin"],
@@ -76,9 +69,9 @@ const inter = Inter({
 });
 
 export const metadata: Metadata = {
-  title: { absolute: "TY Growth | 6-Month Ops Install for Agency Owners" },
+  title: { absolute: "TY Growth | Back-Office Partner for Social Media Agencies" },
   description:
-    "Your agency's back office built and running in 30 days, with a guarantee. GoHighLevel, automation, and AI agents for agency owners.",
+    "I run the back office for small social media agencies, then build CRM, follow-up, and review systems for your clients under your agency's name.",
   icons: { icon: "/icons/sprout.svg" },
 };
 
@@ -108,14 +101,6 @@ function Eyebrow({ children, className = "" }: { children: ReactNode; className?
   );
 }
 
-/** Renders a fill-in value. Anything still in [BRACKETS] gets a lime highlight. */
-function Fill({ value }: { value: string }) {
-  if (!value.startsWith("[")) return <>{value}</>;
-  return (
-    <mark className="rounded-[4px] bg-ops-lime/70 px-1 text-ops-ink box-decoration-clone">{value}</mark>
-  );
-}
-
 const NewTab = () => <span className="sr-only"> (opens in a new tab)</span>;
 
 function LogoLink({ href, label, children }: { href: string; label: string; children: ReactNode }) {
@@ -140,7 +125,7 @@ function BookButton({ className = "", variant = "primary" }: { className?: strin
       rel="noopener noreferrer"
       className={`${variant === "lime" ? btnLime : btnPrimary} ${className}`}
     >
-      Book a fit call
+      Book a 20-minute call
       <NewTab />
     </a>
   );
@@ -188,7 +173,7 @@ function BulletList({ items, node = "sage" }: { items: ReactNode[]; node?: NodeK
   );
 }
 
-/** Pull quote card under the case study. */
+/** Pull quote card. */
 function PullQuote({
   quote,
   name,
@@ -222,7 +207,7 @@ function PullQuote({
             alt="Simply Jess Agency logo"
             width={643}
             height={194}
-            className={`h-8 w-auto ${logoTint}`}
+            className={`h-8 w-auto self-start sm:self-auto ${logoTint}`}
           />
         )}
       </figcaption>
@@ -234,95 +219,62 @@ function PullQuote({
 
 const PROBLEMS = [
   "Onboarding lives in your head instead of in a process.",
-  "Contacts and customer data are spread across five tools.",
-  "Follow-ups and reports go out when you remember them.",
+  "Client info and contacts are spread across five different tools.",
+  "Follow-ups, reports, and decks get done whenever you find the time.",
   "Your content calendar runs on group chats and reminders.",
 ];
 
-const PHASES = [
+const SERVICES = [
   {
-    label: "Month 1",
-    title: "Audit and build",
-    body: "We map your week. I set up or fix GoHighLevel: pipelines, onboarding, forms, follow-ups, contact imports, and reporting. Live by day 30.",
+    label: "For your agency",
+    title: "Your back office, handled",
+    body: "You hand me the ops work eating your week, and I take it over. We meet once a week to go over what’s next.",
+    items: [
+      "Client onboarding and intake forms",
+      "CRM setup, with every contact in one place",
+      "Client tracking and project boards",
+      "Content workflows, from raw files to scheduled posts",
+      "Reports, pitch decks, and strategy docs",
+    ],
     Icon: IconOpsSystems,
   },
   {
-    label: "Months 2-3",
-    title: "Automate and add AI",
-    body: "AI agents take over repetitive work like content calendars, client reports, lead replies, and data cleanup. One new automation every month.",
-    Icon: IconAgents,
-  },
-  {
-    label: "Months 4-6",
-    title: "Run and hand off",
-    body: "A call every two weeks, a monthly report on what’s running and the hours saved, then SOPs and video walkthroughs so your team runs it without me.",
+    label: "For your clients",
+    title: "Backend services you can sell",
+    body: "I build systems for your clients under your agency’s name. You own the relationship and the sale. I build and run it, and we split what the client pays.",
+    items: [
+      "CRM and lead follow-up",
+      "Win-back campaigns to past customers",
+      "Google review requests",
+      "Event and promo messaging by text and email",
+    ],
     Icon: IconAutomation,
-  },
-];
-
-const TARGETS: TimelineItem[] = [
-  {
-    label: "Day 30",
-    title: "Systems live by day 30",
-    body: (
-      <>
-        <Fill value={DAY_30_SYSTEMS} /> built, tested, and running.
-      </>
-    ),
-    node: "ink",
-  },
-  {
-    label: "Day 90",
-    title: (
-      <>
-        <Fill value={HOURS_BACK} /> hours a week off your plate by day 90
-      </>
-    ),
-    body: (
-      <>
-        At kickoff we log where your week goes. By day 90, <Fill value={HOURS_BACK} /> hours of that work is
-        automated, handled by an AI agent, or documented for your team.
-      </>
-    ),
-    node: "ring",
-  },
-  {
-    label: "Day 180",
-    title: <Fill value={DAY_180_TARGET} />,
-    body: "Every core process is automated, handled by an AI agent, or documented in SOPs your team uses without calling you.",
-    node: "lime",
   },
 ];
 
 const STEPS: TimelineItem[] = [
   {
     label: "Step 01",
-    title: "Fit call (20 minutes)",
-    body: "We see if your agency is a fit. If it’s not, I’ll tell you.",
+    title: "20-minute fit call",
+    body: "We go through your week. If I’m not a fit, I’ll tell you.",
     node: "ink",
   },
   {
     label: "Step 02",
-    title: "Kickoff and time audit",
-    body: "We log where your week goes and write down the targets.",
+    title: "Start with your list",
+    body: "You hand me the tasks you’re stuck doing. I take them over, and we meet once a week.",
     node: "ring",
   },
   {
     label: "Step 03",
-    title: "Build",
-    body: "I build inside the tools you already use. You see progress as it happens.",
+    title: "Turn repeats into systems",
+    body: "Work that repeats becomes a template, an automation, or an AI agent, so your hours come back.",
     node: "sage",
   },
   {
     label: "Step 04",
-    title: "Reviews every two weeks",
-    body: "A short call and a monthly report on what’s running and the hours saved.",
-    node: "ring",
-  },
-  {
-    label: "Step 05",
-    title: "Hand off or keep running",
-    body: "I train your team with simple docs, or I stay on and run it for you.",
+    title: "Add client services",
+    body: "When you’re ready, I build backend systems for your clients. You sell it, I build it, we split it.",
     node: "lime",
   },
 ];
@@ -330,7 +282,15 @@ const STEPS: TimelineItem[] = [
 const FAQS: { q: string; a: ReactNode }[] = [
   {
     q: "Is this software or a service?",
-    a: "A service. I build and run the systems inside tools you already use or that we pick together.",
+    a: "A service. I do the work myself inside the tools you already use, and build automations and AI agents where they save time.",
+  },
+  {
+    q: "How is it priced?",
+    a: "Your agency work is a flat monthly rate, set on the call once we see what’s on your plate. Client builds are priced per project, and we split what your client pays.",
+  },
+  {
+    q: "Who owns the client relationship?",
+    a: "You do. Client work goes out under your agency’s name, and I stay behind the scenes.",
   },
   {
     q: "Do I need GoHighLevel already?",
@@ -338,32 +298,15 @@ const FAQS: { q: string; a: ReactNode }[] = [
   },
   {
     q: "What do you need from me?",
-    a: "Logins and data in the first week, quick approvals, and a 30-minute call every two weeks.",
-  },
-  {
-    q: "What if we miss a target?",
-    a: `${GUARANTEE} That applies as long as you’ve kept up your side.`,
+    a: "Logins, a list of what’s eating your week, and a weekly call.",
   },
   {
     q: "Do you guarantee revenue?",
-    a: "No. The guarantee covers the work: systems live, hours back, and the targets we set at kickoff.",
-  },
-  {
-    q: "What happens after 6 months?",
-    a: "Your team runs it with the docs and walkthroughs, or I stay on monthly to run it.",
-  },
-  {
-    q: "Can you build this for my clients?",
-    a: "Yes, ask on the fit call.",
+    a: "No. I’m responsible for the systems getting built and running, and the time they give back to you. On client campaigns, my part ends at replies and booked calls. Closing is yours.",
   },
   {
     q: "You’re early. Why trust you?",
-    a: (
-      <>
-        I am early, and that’s why the guarantee exists and why I only take <Fill value={INSTALL_SLOTS} /> at a
-        time. You work with me directly.
-      </>
-    ),
+    a: "I am early, so I keep my client list small and you work with me directly. We start with the tasks already on your list, so you see the work before anything bigger.",
   },
 ];
 
@@ -393,7 +336,7 @@ export default function HomePage() {
             <div className="lg:ml-[34%] lg:max-w-[740px]">
               <div className="flex items-end gap-3">
                 <SproutNode className="-mb-[7px] -ml-5 h-11 w-[38px] shrink-0 lg:hidden" />
-                <Eyebrow>6-Month Ops Install for Agency Owners</Eyebrow>
+                <Eyebrow>Ops partner for social media agencies</Eyebrow>
               </div>
 
               <div className="relative mt-5 lg:mt-6">
@@ -408,20 +351,20 @@ export default function HomePage() {
                   id="hero-heading"
                   className="font-ops-heading text-[36px] font-extrabold leading-[1.06] tracking-[-0.02em] text-ops-ink text-balance sm:text-[40px] md:text-[52px] lg:text-[56px]"
                 >
-                  Your agency’s back office, built and running in 30 days.{" "}
-                  <span className="text-ops-moss">Guaranteed.</span>
+                  Your agency’s back office, <span className="text-ops-moss">handled.</span>
                 </h1>
               </div>
 
               <p className="mt-6 max-w-[36rem] text-ops-text">
-                I set up your onboarding, follow-up, reporting, and content systems in GoHighLevel and AI, then run
-                them with you for 6 months. {GUARANTEE}
+                I take the ops work off your plate: onboarding, CRM, client tracking, reports, and decks. Anything that
+                repeats becomes a system or an AI agent. When you’re ready, I also build backend services for your
+                clients under your agency’s name.
               </p>
 
               <div className="mt-9 flex flex-wrap items-center gap-x-7 gap-y-4">
                 <BookButton />
-                <a href="#guarantee" className={textLink}>
-                  See the guarantee
+                <a href="#what-i-do" className={textLink}>
+                  See what I take on
                   <ArrowDown className="size-4" aria-hidden="true" />
                 </a>
               </div>
@@ -497,9 +440,15 @@ export default function HomePage() {
                 </li>
               </ul>
               <p className="mx-auto mt-7 max-w-2xl text-[14px] leading-relaxed text-ops-text/80">
-                I run ops and systems for Simply Jess Agency and manage social media for BecksTheSocial.
+                Ops and systems partner for Simply Jess Agency and BecksTheSocial.
               </p>
             </div>
+
+            {SHOW_TESTIMONIAL && (
+              <div className="mt-10 md:mt-12">
+                <PullQuote quote={JESS_QUOTE} name="Jess Marquez" detail="Simply Jess Agency" showLogo />
+              </div>
+            )}
           </div>
         </section>
 
@@ -531,32 +480,48 @@ export default function HomePage() {
           </div>
         </section>
 
-        {/* THE OFFER */}
-        <section id="offer" aria-labelledby="offer-heading" className="scroll-mt-20 border-t border-ops-line/60 py-16 md:py-24">
+        {/* WHAT I DO */}
+        <section
+          id="what-i-do"
+          aria-labelledby="what-heading"
+          className="scroll-mt-20 border-t border-ops-line/60 py-16 md:py-24"
+        >
           <div className={container}>
             <div className="max-w-3xl">
-              <Eyebrow>The offer</Eyebrow>
-              <h2 id="offer-heading" className={`mt-4 ${h2Class}`}>
-                The 6-Month Agency Ops Install
+              <Eyebrow>What I do</Eyebrow>
+              <h2 id="what-heading" className={`mt-4 ${h2Class}`}>
+                One ops partner, two ways to use me.
               </h2>
-              <p className="mt-3 font-ops-heading text-[20px] font-semibold leading-snug tracking-[-0.01em] text-ops-moss md:text-[24px]">
-                Systems that run without you in the middle.
-              </p>
               <p className="mt-5 max-w-2xl text-ops-text">
-                One engagement. I build the systems, run them with you, then hand them off.
+                I start inside your agency. Once your back office runs without you in the middle, I can also build for
+                your clients.
               </p>
             </div>
 
-            <ol className="mt-12 grid gap-5 lg:grid-cols-3 lg:gap-6">
-              {PHASES.map(({ label, title, body, Icon }) => (
-                <li key={label} className={`${cardClass} flex flex-col p-7 md:p-8`}>
+            <div className="mt-12 grid gap-5 md:grid-cols-2 md:gap-6">
+              {SERVICES.map(({ label, title, body, items, Icon }) => (
+                <article key={label} className={`${cardClass} flex flex-col p-7 md:p-9`}>
                   <Icon className="h-10 w-[88px]" />
                   <Eyebrow className="mt-7">{label}</Eyebrow>
                   <h3 className={`mt-3 ${h3Class}`}>{title}</h3>
                   <p className={`mt-3 ${smallBody}`}>{body}</p>
-                </li>
+                  <div className={`mt-6 border-t border-ops-line/60 pt-6 ${smallBody}`}>
+                    <BulletList items={items} />
+                  </div>
+                </article>
               ))}
-            </ol>
+            </div>
+
+            <div className="mt-5 grid gap-6 rounded-2xl border border-ops-line/70 bg-ops-card p-7 md:mt-6 md:grid-cols-[auto_1fr] md:items-center md:gap-8 md:p-9">
+              <IconAgents className="h-10 w-[88px]" />
+              <div>
+                <h3 className={h3Class}>It gets lighter every month.</h3>
+                <p className={`mt-2 ${smallBody}`}>
+                  Anything we do more than twice becomes a template, an automation, or an AI agent. The same work takes
+                  less time each month, and my time moves to the next thing on your list.
+                </p>
+              </div>
+            </div>
 
             <p className="mt-6 text-[14px] text-ops-text/80">
               Not included: software subscriptions, SMS and email usage fees, ad spend.
@@ -564,66 +529,31 @@ export default function HomePage() {
           </div>
         </section>
 
-        {/* GUARANTEE */}
+        {/* HOW IT WORKS */}
         <section
-          id="guarantee"
-          aria-labelledby="guarantee-heading"
-          className="scroll-mt-20 border-y border-ops-line/60 bg-ops-card py-16 md:py-24"
+          id="how-it-works"
+          aria-labelledby="how-heading"
+          className="scroll-mt-20 border-t border-ops-line/60 py-16 md:py-24"
         >
           <div className={container}>
-            <div className="grid gap-6 lg:grid-cols-12 lg:gap-12">
-              <div className="lg:col-span-7">
-                <Eyebrow>The guarantee</Eyebrow>
-                <h2 id="guarantee-heading" className={`mt-4 ${h2Class}`}>
-                  Six months. Clear targets. If we miss them, I keep going for free.
-                </h2>
-              </div>
-              <p className="font-medium text-ops-ink lg:col-span-5 lg:pt-9">You do your part. {GUARANTEE}</p>
+            <div className="max-w-2xl">
+              <Eyebrow>How it works</Eyebrow>
+              <h2 id="how-heading" className={`mt-4 ${h2Class}`}>
+                Start small. Build from there.
+              </h2>
             </div>
-
             <div className="mt-14 md:mt-16">
-              <Timeline items={TARGETS} colsClass="lg:grid-cols-3" />
+              <Timeline items={STEPS} colsClass="lg:grid-cols-4" />
             </div>
-
-            <div className="mt-14 grid overflow-hidden rounded-2xl border border-ops-line/70 bg-ops-cream md:grid-cols-2">
-              <div className="p-7 md:p-9">
-                <h3 className={h3Class}>Your part</h3>
-                <div className={`mt-5 ${smallBody}`}>
-                  <BulletList
-                    node="ring"
-                    items={[
-                      "Data and logins within 5 business days",
-                      "Approvals within 2 business days",
-                      "A 30-minute call every two weeks",
-                      "Using the systems instead of working around them",
-                    ]}
-                  />
-                </div>
-              </div>
-              <div className="border-t border-ops-line/70 p-7 md:border-l md:border-t-0 md:p-9">
-                <h3 className={h3Class}>My part</h3>
-                <div className={`mt-5 ${smallBody}`}>
-                  <BulletList
-                    node="ink"
-                    items={[
-                      "Build to the targets we wrote down at kickoff",
-                      "Report progress every month",
-                      "Keep working at no extra cost if we miss a target while you’ve kept up your side",
-                    ]}
-                  />
-                </div>
-              </div>
-            </div>
-
-            <p className="mt-6 text-[14px] leading-relaxed text-ops-text/80">
-              This guarantee covers the work, not your revenue. Targets are set in writing at kickoff, and the signed
-              agreement controls.
-            </p>
           </div>
         </section>
 
         {/* RESULTS */}
-        <section id="results" aria-labelledby="results-heading" className="scroll-mt-20 py-16 md:py-24">
+        <section
+          id="results"
+          aria-labelledby="results-heading"
+          className="scroll-mt-20 border-t border-ops-line/60 py-16 md:py-24"
+        >
           <div className={container}>
             <Eyebrow>Results</Eyebrow>
             <h2 id="results-heading" className={`mt-4 ${h2Class}`}>
@@ -640,9 +570,12 @@ export default function HomePage() {
                   <div className={`mt-7 ${smallBody}`}>
                     <BulletList
                       items={[
-                        "GoHighLevel setup and contact consolidation",
-                        "A content calendar and posting workflow",
-                        "Caption and content automation",
+                        "Merged contacts from Shopify, her phone, her event app, and email into one CRM",
+                        <>
+                          {CASE_OPTED_IN} past customers opted in to email and ready for her first win-back campaign
+                        </>,
+                        "Built the content workflow her editors use, from raw files to scheduled posts",
+                        "Her white-label tech partner: she sells CRM and automation to her clients, and I build it",
                       ]}
                     />
                   </div>
@@ -650,80 +583,28 @@ export default function HomePage() {
                 <div className="ops-dark relative flex flex-col justify-center overflow-hidden bg-gradient-to-br from-ops-forest to-ops-ink px-7 pb-8 pt-16 md:px-10 md:pb-10">
                   <CommunityCircuit glowId="ops-case-glow" className="absolute left-0 top-6 h-7 w-[220px] opacity-60" />
                   <p className="font-ops-heading text-[52px] font-extrabold leading-none tracking-[-0.02em] text-ops-cream md:text-[60px]">
-                    3,000+
+                    {CASE_STAT}
                   </p>
-                  <p className="mt-3 text-ops-cream/85">contacts brought into one CRM</p>
+                  <p className="mt-3 text-ops-cream/85">{CASE_STAT_LABEL}</p>
                 </div>
               </div>
-              <p className="border-t border-ops-line/60 px-7 py-5 text-ops-text md:px-10">
-                <span className="font-semibold text-ops-ink">Results:</span> <Fill value={CASE_RESULT} />
-              </p>
             </article>
 
-            {SHOW_TESTIMONIAL && (
-              <div className="mt-8">
-                <PullQuote quote={JESS_QUOTE} name="Jess Marquez" detail="Simply Jess Agency" showLogo />
-              </div>
-            )}
-          </div>
-        </section>
-
-        {/* HOW IT WORKS */}
-        <section
-          id="how-it-works"
-          aria-labelledby="how-heading"
-          className="scroll-mt-20 border-t border-ops-line/60 py-16 md:py-24"
-        >
-          <div className={container}>
-            <div className="max-w-2xl">
-              <Eyebrow>How it works</Eyebrow>
-              <h2 id="how-heading" className={`mt-4 ${h2Class}`}>
-                Five steps. You stay in control the whole time.
-              </h2>
-            </div>
-            <div className="mt-14 md:mt-16">
-              <Timeline items={STEPS} colsClass="lg:grid-cols-5" />
-            </div>
-          </div>
-        </section>
-
-        {/* PRICE AND PILOT */}
-        <section
-          id="pricing"
-          aria-labelledby="pricing-heading"
-          className="scroll-mt-20 border-t border-ops-line/60 py-16 md:py-24"
-        >
-          <div className={container}>
-            <Eyebrow>Pricing</Eyebrow>
-            <h2 id="pricing-heading" className={`mt-4 ${h2Class}`}>
-              Price and pilot
-            </h2>
-
-            <div className="mt-12 grid gap-5 md:grid-cols-2 md:gap-6">
-              <article className={`${cardSurface} relative border border-ops-ink/30 p-7 md:p-9`}>
-                <SproutMark className="absolute right-6 top-6 size-7" />
-                <h3 className={h3Class}>6-Month Install</h3>
-                <p className="mt-5 font-ops-heading text-[40px] font-extrabold leading-none tracking-[-0.02em] text-ops-ink md:text-[48px]">
-                  <Fill value={PRICE_INSTALL} />
-                </p>
-                <p className={`mt-5 ${smallBody}`}>Everything in the offer, plus the guarantee.</p>
-              </article>
-              <article className={`${cardClass} p-7 md:p-9`}>
-                <h3 className={h3Class}>2-Month Pilot</h3>
-                <p className="mt-5 font-ops-heading text-[40px] font-extrabold leading-none tracking-[-0.02em] text-ops-ink md:text-[48px]">
-                  <Fill value={PRICE_PILOT} />
-                </p>
-                <p className={`mt-5 ${smallBody}`}>
-                  $5,000 to start, $5,000 at day 30. Credited in full toward the 6-month install if you continue. If
-                  you stop, you keep everything built.
-                </p>
-              </article>
-            </div>
+            <article className={`${cardClass} mt-5 p-7 md:mt-6 md:p-10`}>
+              <h3 className="font-ops-heading text-[22px] font-extrabold tracking-[-0.02em] text-ops-ink md:text-[24px]">
+                BecksTheSocial
+              </h3>
+              <p className="mt-1 text-ops-text/80">A Miami social media agency</p>
+              <p className={`mt-5 max-w-3xl ${smallBody}`}>
+                Weekly ops support for the owner. I take over the tasks she hands me, and each week we pick the next
+                piece of her workflow to turn into a system.
+              </p>
+            </article>
           </div>
         </section>
 
         {/* WHO IT'S FOR */}
-        <section aria-labelledby="fit-heading" className="border-t border-ops-line/60 pb-10 pt-16 md:pb-12 md:pt-24">
+        <section aria-labelledby="fit-heading" className="border-t border-ops-line/60 py-16 md:py-24">
           <div className={container}>
             <Eyebrow>Fit</Eyebrow>
             <h2 id="fit-heading" className={`mt-4 ${h2Class}`}>
@@ -737,8 +618,9 @@ export default function HomePage() {
                   <h3 className={h3Class}>For</h3>
                 </div>
                 <p className="mt-4 text-ops-text">
-                  Agency owners with steady clients who are the glue between their CRM, inbox, project board, and
-                  calendar, and who will spend 30 minutes every two weeks on the build.
+                  Owners of small social media, content, or creative agencies who are still the glue between their CRM,
+                  inbox, project board, and calendar. Especially if you’ve been thinking about hiring an ops person or
+                  a VA.
                 </p>
               </div>
               <div className="rounded-2xl border border-dashed border-ops-line p-7 md:p-9">
@@ -751,29 +633,6 @@ export default function HomePage() {
                   and anyone who wants a guaranteed revenue number.
                 </p>
               </div>
-            </div>
-          </div>
-        </section>
-
-        {/* SCARCITY + CTA */}
-        <section aria-labelledby="slots-heading" className="pb-16 md:pb-24">
-          <div className={container}>
-            <div
-              className={`${cardClass} flex flex-col gap-6 p-7 md:flex-row md:items-center md:justify-between md:p-9`}
-            >
-              <div className="flex gap-4">
-                <NodeDot kind="lime" className="ops-pulse mt-2.5 hidden sm:block" />
-                <div>
-                  <h2
-                    id="slots-heading"
-                    className="font-ops-heading text-[24px] font-extrabold leading-tight tracking-[-0.02em] text-ops-ink md:text-[28px]"
-                  >
-                    I take <Fill value={INSTALL_SLOTS} /> installs at a time.
-                  </h2>
-                  <p className="mt-2 text-ops-text">If a spot is open, the next step is a 20-minute fit call.</p>
-                </div>
-              </div>
-              <BookButton className="shrink-0 self-start md:self-auto" />
             </div>
           </div>
         </section>
@@ -815,13 +674,13 @@ export default function HomePage() {
           <div className="relative mx-auto max-w-3xl px-5 py-20 text-center md:px-6 md:py-28">
             <h2
               id="cta-heading"
-              className="font-ops-heading text-[34px] font-extrabold leading-[1.08] tracking-[-0.02em] text-ops-cream md:text-[52px]"
+              className="font-ops-heading text-[34px] font-extrabold leading-[1.08] tracking-[-0.02em] text-ops-cream text-balance md:text-[52px]"
             >
-              See if your agency’s a fit.
+              See what I can take off your plate.
             </h2>
             <p className="mx-auto mt-5 max-w-xl text-ops-cream/85">
-              Book a 20-minute call. We’ll walk through your week, and you’ll leave knowing the first thing I can
-              take off your plate. If it’s not a fit, I’ll tell you.
+              Book a 20-minute call. We’ll walk through your week, and you’ll leave knowing the first thing I’d take
+              over. If it’s not a fit, I’ll tell you.
             </p>
             <BookButton variant="lime" className="mt-10" />
           </div>

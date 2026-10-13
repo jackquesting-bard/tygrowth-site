@@ -15,7 +15,7 @@ export function HomeFooter() {
             <Wordmark />
           </Link>
           <p className="mt-4 max-w-xs leading-relaxed text-ops-text/85">
-            Ops, automation, and AI for agency owners.
+            Ops, automation, and AI for social media agencies.
           </p>
           <p className="mt-2 text-ops-text/70">Celebration, FL</p>
         </div>
