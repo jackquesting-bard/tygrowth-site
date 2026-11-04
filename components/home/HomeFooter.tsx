@@ -23,13 +23,18 @@ export function HomeFooter() {
         <nav aria-label="Footer">
           <ul className="grid gap-3 md:justify-items-start">
             <li>
-              <a href="#community" className={linkClass}>
+              <a href="/#community" className={linkClass}>
                 Free agency owner group
               </a>
             </li>
             <li>
               <Link href={LINKEDIN_SYSTEMS_URL} className={linkClass}>
                 For founders: LinkedIn Content Systems
+              </Link>
+            </li>
+            <li>
+              <Link href="/agent-ready" className={linkClass}>
+                For property managers: agent-ready websites
               </Link>
             </li>
             <li>
