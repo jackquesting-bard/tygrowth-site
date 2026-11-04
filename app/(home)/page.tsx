@@ -6,6 +6,9 @@ import { Inter, Plus_Jakarta_Sans } from "next/font/google";
 import { ArrowDown, ArrowRight, Plus } from "lucide-react";
 import { HomeHeader } from "@/components/home/HomeHeader";
 import { HomeFooter } from "@/components/home/HomeFooter";
+import AgentTools from "@/components/agent/AgentTools";
+import AgentJsonLd from "@/components/agent/AgentJsonLd";
+import AgentSection from "@/components/agent/AgentSection";
 import {
   CommunityCircuit,
   CtaCircuit,
@@ -714,6 +717,11 @@ export default function HomePage() {
           </div>
         </section>
       </main>
+
+      {/* Agent layer: structured data, WebMCP tools for browser agents, and a visible section for HTML-reading agents. */}
+      <AgentJsonLd />
+      <AgentTools />
+      <AgentSection />
 
       <HomeFooter />
     </div>
