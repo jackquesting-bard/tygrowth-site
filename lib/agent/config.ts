@@ -58,6 +58,21 @@ export const business = {
       pricing: "Priced per project; the agency and TY Growth split what the client pays.",
     },
     {
+      id: "agent-ready-websites",
+      name: "Agent-ready websites for property managers",
+      description:
+        "Adds an agent layer on top of a property manager's existing site so AI agents can read its services and listings and book a consultation. Starts with a free agent check, then a fixed-price build and a 30-day re-test.",
+      includes: [
+        "Free agent check recorded across ChatGPT, Gemini, Claude and Grok",
+        "Services and listings readable by agents",
+        "Consultation booking and inquiry actions",
+        "WebMCP tools for browser agents",
+        "30-day re-test",
+      ],
+      pricing: "Fixed price after the free agent check.",
+      url: `${SITE_URL}/agent-ready`,
+    },
+    {
       id: "linkedin-content-systems",
       name: "LinkedIn content systems (for founders and execs)",
       description:

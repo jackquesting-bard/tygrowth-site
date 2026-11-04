@@ -6,11 +6,13 @@ import { Menu, X } from "lucide-react";
 import { Wordmark } from "./motifs";
 import { BOOKING_URL, btnPrimaryBase } from "./shared";
 
+// "/#…" so the links still work from other pages (e.g. /agent-ready).
 const NAV = [
-  { href: "#what-i-do", label: "What I do" },
-  { href: "#how-it-works", label: "How it works" },
-  { href: "#results", label: "Results" },
-  { href: "#faq", label: "FAQ" },
+  { href: "/#what-i-do", label: "What I do" },
+  { href: "/#how-it-works", label: "How it works" },
+  { href: "/#results", label: "Results" },
+  { href: "/#faq", label: "FAQ" },
+  { href: "/agent-ready", label: "AI agents" },
 ];
 
 export function HomeHeader() {

@@ -2,7 +2,7 @@ import type { Metadata } from "next";
 import type { ReactNode } from "react";
 import Image from "next/image";
 import Link from "next/link";
-import { Inter, Plus_Jakarta_Sans } from "next/font/google";
+import { inter, jakarta } from "@/components/home/fonts";
 import { ArrowDown, ArrowRight, Plus } from "lucide-react";
 import { HomeHeader } from "@/components/home/HomeHeader";
 import { HomeFooter } from "@/components/home/HomeFooter";
@@ -57,19 +57,6 @@ const CLIENT_LINKS = {
   becks: "https://www.instagram.com/becksthesocial/",
 };
 
-const jakarta = Plus_Jakarta_Sans({
-  subsets: ["latin"],
-  weight: ["600", "700", "800"],
-  variable: "--font-ops-jakarta",
-  display: "swap",
-});
-
-const inter = Inter({
-  subsets: ["latin"],
-  weight: ["400", "500", "600"],
-  variable: "--font-ops-inter",
-  display: "swap",
-});
 
 export const metadata: Metadata = {
   title: { absolute: "TY Growth | Back-Office Partner for Social Media Agencies" },
