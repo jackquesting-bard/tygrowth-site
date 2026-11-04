@@ -99,7 +99,9 @@ export const business = {
 
 export const cal = {
   // Cal.com username and event slug for the 20-minute fit call.
-  username: process.env.CAL_USERNAME ?? "",
+  // The username is public (it's in every booking link), so it lives here as the
+  // default. Set CAL_USERNAME in Vercel only to override it.
+  username: process.env.CAL_USERNAME || "jack-mchalffey-rdyvgu",
   eventSlug: process.env.CAL_EVENT_SLUG ?? "fit-call",
   hostTimeZone: "America/New_York",
 };
