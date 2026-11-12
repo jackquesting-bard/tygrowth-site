@@ -10,7 +10,7 @@ import { BOOKING_URL, btnPrimaryBase } from "./shared";
 const NAV = [
   { href: "/#what-i-do", label: "What I do" },
   { href: "/#how-it-works", label: "How it works" },
-  { href: "/#results", label: "Results" },
+  { href: "/work", label: "Work" },
   { href: "/#faq", label: "FAQ" },
   { href: "/agent-ready", label: "AI agents" },
   { href: "/holiday", label: "Holiday" },

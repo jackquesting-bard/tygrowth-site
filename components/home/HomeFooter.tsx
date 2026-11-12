@@ -23,6 +23,11 @@ export function HomeFooter() {
         <nav aria-label="Footer">
           <ul className="grid gap-3 md:justify-items-start">
             <li>
+              <Link href="/work" className={linkClass}>
+                Work and portfolio
+              </Link>
+            </li>
+            <li>
               <a href="/#community" className={linkClass}>
                 Free agency owner group
               </a>
