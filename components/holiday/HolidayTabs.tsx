@@ -32,7 +32,11 @@ function Eyebrow({ children, dark = false }: { children: ReactNode; dark?: boole
 
 const INCLUDED = [
   { n: "01", title: "Holiday email", body: "Written, designed and scheduled to your customer list." },
-  { n: "02", title: "Three texts", body: "Teaser, launch day and last call, sent only to customers who opted in." },
+  {
+    n: "02",
+    title: "Three texts",
+    body: "Teaser, launch day and last call, if you already text your customers. No texting tool? You get a second email instead.",
+  },
   { n: "03", title: "Gift card promo", body: "The offer, the bonus math, and counter sign copy so staff can sell it." },
   { n: "04", title: "Three social posts", body: "Graphics plus captions, ready for Instagram and Facebook." },
   { n: "05", title: "Google Business post", body: "So people searching nearby see your deal right on Maps." },
@@ -57,13 +61,40 @@ const STEPS = [
 ];
 
 const FAQ = [
-  { q: "No email or text tool?", a: "I can send it through my platform for you." },
+  { q: "No email tool?", a: "I can send it through my platform for you." },
+  {
+    q: "No texting tool?",
+    a: "Getting a new texting number approved takes days to weeks, so it won't be ready for Black Friday. You get a second email instead, and we can set texting up properly for next season.",
+  },
+  {
+    q: "Are you running ads?",
+    a: "Only if you pick the ads option. I put a paid boost behind your Black Friday post, aimed at people near you. You set the budget and pay Meta directly from your own account.",
+  },
   {
     q: "Are the texts allowed?",
     a: "They only go to customers who opted in to hear from you, and every text includes an opt out.",
   },
   { q: "How much of my time?", a: "One 15-minute call and a few minutes to approve drafts." },
   { q: "When is the cutoff?", a: "Book by Friday, November 20 so everything is live before Black Friday week." },
+];
+
+const AFTER = [
+  {
+    title: "Monthly marketing",
+    body: "Email, social posts and a promo every month, so January and February aren't dead.",
+  },
+  {
+    title: "Texting, set up right",
+    body: "Your own approved number and opt-in at checkout, ready for your next big promo.",
+  },
+  {
+    title: "CRM and follow-up",
+    body: "Every customer in one place, with birthday and win-back messages that send on their own.",
+  },
+  {
+    title: "Ads management",
+    body: "Local ads run and adjusted every week, with a plain-English report on what they brought in.",
+  },
 ];
 
 const WHO = ["Coffee shops", "Restaurants", "Gyms and studios", "Salons and med spas", "Boutiques"];
@@ -138,11 +169,24 @@ export default function HolidayTabs() {
           </div>
 
           <div className="ops-dark rounded-2xl bg-ops-ink p-7 text-ops-cream">
-            <p className="text-[14px] font-semibold text-ops-cream/80">One flat price</p>
-            <p className="mt-2 font-ops-heading text-[60px] font-extrabold leading-none tracking-[-0.02em] text-ops-lime">
-              $497
-            </p>
-            <p className="mt-3 text-[16px] text-ops-cream/85">Paid upfront. Everything below included.</p>
+            <p className="text-[14px] font-semibold text-ops-cream/80">Pick one. Paid upfront.</p>
+            <div className="mt-4 grid grid-cols-2 gap-3">
+              <div className="rounded-xl border border-ops-cream/20 p-4">
+                <p className="text-[13px] font-semibold text-ops-cream/80">Campaign</p>
+                <p className="mt-1 font-ops-heading text-[40px] font-extrabold leading-none tracking-[-0.02em] text-ops-lime">
+                  $497
+                </p>
+                <p className="mt-2 text-[13.5px] leading-snug text-ops-cream/80">All five pieces</p>
+              </div>
+              <div className="rounded-xl border border-ops-lime/60 bg-ops-cream/5 p-4">
+                <p className="text-[13px] font-semibold text-ops-cream/80">Campaign + ads</p>
+                <p className="mt-1 font-ops-heading text-[40px] font-extrabold leading-none tracking-[-0.02em] text-ops-lime">
+                  $697
+                </p>
+                <p className="mt-2 text-[13.5px] leading-snug text-ops-cream/80">Plus a local ad boost</p>
+              </div>
+            </div>
+            <p className="mt-3 text-[13.5px] text-ops-cream/70">Ad spend is yours, paid directly to Meta.</p>
             <div className="my-5 h-px bg-ops-cream/15" />
             <p className="text-[16px] leading-[1.55]">
               <span className="font-semibold text-ops-lime">Guarantee:</span> live before Black Friday or you get every
@@ -179,6 +223,16 @@ export default function HolidayTabs() {
                   <p className={`mt-2 ${body}`}>{i.body}</p>
                 </li>
               ))}
+              <li className="ops-dark rounded-2xl bg-ops-ink p-6 text-ops-cream">
+                <p className="font-ops-heading text-[26px] font-extrabold text-ops-lime">+ Ads</p>
+                <h3 className="mt-2 font-ops-heading text-[20px] font-bold leading-snug tracking-[-0.02em]">
+                  Optional local ad boost
+                </h3>
+                <p className="mt-2 text-[16px] leading-[1.65] text-ops-cream/85 md:text-[17px]">
+                  A paid boost behind your Black Friday post, aimed at people near you. $697 total. You set the ad
+                  budget and pay Meta directly.
+                </p>
+              </li>
             </ul>
           </div>
         </section>
@@ -201,7 +255,28 @@ export default function HolidayTabs() {
           </div>
         </section>
 
-        <section aria-labelledby="holiday-who-heading" className="py-16 md:py-24">
+        <section aria-labelledby="holiday-after-heading" className="py-16 md:py-24">
+          <div className={container}>
+            <Eyebrow>After the holidays</Eyebrow>
+            <h2 id="holiday-after-heading" className={`mt-4 max-w-[40rem] ${h2Class}`}>
+              Liked how it went? Keep it running.
+            </h2>
+            <p className={`mt-4 max-w-[40rem] ${body}`}>
+              After Cyber Monday you get a short recap of what went out and what it brought in. If you want more,
+              here&apos;s what we can keep going.
+            </p>
+            <ul className="mt-10 grid gap-5 sm:grid-cols-2 lg:grid-cols-4">
+              {AFTER.map((a) => (
+                <li key={a.title} className={card}>
+                  <h3 className={h3Class}>{a.title}</h3>
+                  <p className={`mt-2 ${body}`}>{a.body}</p>
+                </li>
+              ))}
+            </ul>
+          </div>
+        </section>
+
+        <section aria-labelledby="holiday-who-heading" className="bg-ops-card/60 py-16 md:py-24">
           <div className={`${container} grid gap-12 md:grid-cols-[1fr_1.4fr]`}>
             <div>
               <Eyebrow>Built for</Eyebrow>
@@ -401,7 +476,8 @@ export default function HolidayTabs() {
             All five pieces. $497. Live in 72 hours.
           </h2>
           <p className="mx-auto mt-5 max-w-[34rem] text-ops-cream/85">
-            Live before Black Friday or your money back. Text me your business name and I&apos;ll call you back today.
+            Add a local ad boost for $697 total. Live before Black Friday or your money back. Text me your business
+            name and I&apos;ll call you back today.
           </p>
           <div className="mt-9 flex flex-wrap items-center justify-center gap-x-6 gap-y-4">
             <CallButton variant="lime" />

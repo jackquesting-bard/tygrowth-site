@@ -80,12 +80,13 @@ export const business = {
         "Holiday campaign for local businesses with a customer list, built and launched in 72 hours: one email, three texts to opted-in customers, a gift card promo, three social posts and a Google Business post.",
       includes: [
         "Holiday email",
-        "Three texts (teaser, launch, last call)",
+        "Three texts (teaser, launch, last call) if the business already texts customers, otherwise a second email",
         "Gift card promo and counter sign copy",
         "Three social posts",
         "Google Business post",
       ],
-      pricing: "$497 flat, paid upfront. Live before Black Friday (Nov 27, 2026) or full refund. Book by Nov 20.",
+      pricing:
+        "$497 flat, or $697 with a local Meta ad boost (ad spend paid by the client directly to Meta). Paid upfront. Live before Black Friday (Nov 27, 2026) or full refund. Book by Nov 20. Texts only for businesses that already have an approved texting tool; otherwise a second email.",
       url: `${SITE_URL}/holiday`,
     },
     {
