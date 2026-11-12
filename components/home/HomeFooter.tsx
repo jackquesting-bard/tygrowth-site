@@ -34,7 +34,12 @@ export function HomeFooter() {
             </li>
             <li>
               <Link href="/agent-ready" className={linkClass}>
-                For property managers: agent-ready websites
+                Your own personal AI agent
+              </Link>
+            </li>
+            <li>
+              <Link href="/holiday" className={linkClass}>
+                Black Friday campaigns for local businesses
               </Link>
             </li>
             <li>

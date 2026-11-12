@@ -13,6 +13,7 @@ const NAV = [
   { href: "/#results", label: "Results" },
   { href: "/#faq", label: "FAQ" },
   { href: "/agent-ready", label: "AI agents" },
+  { href: "/holiday", label: "Holiday" },
 ];
 
 export function HomeHeader() {

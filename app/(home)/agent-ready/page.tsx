@@ -5,21 +5,26 @@ import { inter, jakarta } from "@/components/home/fonts";
 import { HomeHeader } from "@/components/home/HomeHeader";
 import { HomeFooter } from "@/components/home/HomeFooter";
 import { NodeDot } from "@/components/home/motifs";
-import { BOOKING_URL, btnPrimary, btnLime, textLink } from "@/components/home/shared";
+import { EMAIL, btnPrimary, btnLime, textLink } from "@/components/home/shared";
 import AgentTools from "@/components/agent/AgentTools";
 import AgentSection from "@/components/agent/AgentSection";
 
 /* =====================================================================
-   Agent-ready sites for property managers.
-   Offer details live in the "Housing offer" tab of the planning doc.
+   Personal agent: business and marketing ops handled by an AI agent
+   set up on the client's own tools. CTA is email, details on request.
+   (Route kept at /agent-ready so existing links still work.)
    ===================================================================== */
 
 export const metadata: Metadata = {
-  title: { absolute: "Agent-Ready Websites for Property Managers | TY Growth" },
+  title: { absolute: "Your Own Personal AI Agent for Business and Marketing Ops | TY Growth" },
   description:
-    "Owners and renters are handing their search to AI agents. I make your site one an agent can read and act on: your services, your listings, and a booked consultation.",
+    "An AI agent set up on the tools you already use, handling the business and marketing ops that eat your week. You approve what goes out. Email Jack for details.",
   icons: { icon: "/icons/sprout.svg" },
 };
+
+const MAILTO = `mailto:${EMAIL}?subject=${encodeURIComponent("Personal agent")}&body=${encodeURIComponent(
+  "Hi Jack,\n\nMy business: \nThe tasks eating my week: \nTools I use (email, CRM, calendar, etc.): \n",
+)}`;
 
 const container = "mx-auto max-w-6xl px-5 md:px-6";
 const h2Class =
@@ -35,109 +40,137 @@ function Eyebrow({ children }: { children: ReactNode }) {
   );
 }
 
-function CheckButton({ variant = "primary" }: { variant?: "primary" | "lime" }) {
+function EmailButton({ variant = "primary" }: { variant?: "primary" | "lime" }) {
   return (
-    <a
-      href={BOOKING_URL}
-      target="_blank"
-      rel="noopener noreferrer"
-      className={variant === "lime" ? btnLime : btnPrimary}
-    >
-      Get a free agent check
-      <span className="sr-only"> (opens in a new tab)</span>
+    <a href={MAILTO} className={variant === "lime" ? btnLime : btnPrimary}>
+      Email me for details
     </a>
   );
 }
 
-const STATS: { value: string; label: string; source: string; href: string }[] = [
+type UseCase = { title: string; body: string; example: string };
+
+const BUSINESS_OPS: UseCase[] = [
   {
-    value: "45%",
-    label: "of prospective home buyers have used AI tools in their search, up from 37% a year earlier",
-    source: "Veterans United, June 2026",
-    href: "https://www.veteransunited.com/education/ai-homebuying-survey/",
+    title: "Inbox triage",
+    body: "Sorts your email every morning into what needs you, what it already drafted a reply to, and what can wait.",
+    example: "\"Three need you today. I drafted replies to the other eight in your voice.\"",
   },
   {
-    value: "71%",
-    label: "of ChatGPT rental searches linked to a community's own website",
-    source: "Agency Fifty3, via NAA",
-    href: "https://naahq.org/news/how-properties-can-gain-visibility-ai-search",
+    title: "Lead follow-up",
+    body: "Answers new form fills and DMs within minutes, asks your qualifying questions, and logs them in your CRM.",
+    example: "\"New inquiry from a 12-person dental office. Replied, sent your calendar link, added to HubSpot.\"",
   },
   {
-    value: "5",
-    label: "big listing portals already run apps inside ChatGPT, and they send leads to themselves",
-    source: "HousingWire, Apartments.com",
-    href: "https://www.housingwire.com/articles/realtorcom-chatgpt-app-launch/",
+    title: "Meetings to action items",
+    body: "Turns call notes into tasks with owners and dates, updates the client record, and drafts the follow-up email.",
+    example: "\"Recap from your 2pm is drafted. Four tasks created, two are yours.\"",
+  },
+  {
+    title: "Client onboarding",
+    body: "When a client signs, it sends the intake form, sets up folders and tasks, and books the kickoff call.",
+    example: "\"New client signed. Intake sent, Drive folder ready, kickoff booked for Thursday.\"",
+  },
+  {
+    title: "Invoices and payments",
+    body: "Flags overdue invoices and drafts reminders, gentle for good clients and firmer for repeat late payers.",
+    example: "\"Two invoices are 15+ days late. Reminders drafted for your OK.\"",
   },
 ];
 
-const BUILD: { title: string; body: string }[] = [
+const MARKETING_OPS: UseCase[] = [
   {
-    title: "Your services, readable",
-    body: "What you manage, where, your fees approach, and who you're a fit for, in a format an agent reads in one request.",
+    title: "Content repurposing",
+    body: "Turns one video, podcast or long post into short posts, captions and a newsletter draft, queued for approval.",
+    example: "\"Your Tuesday video became 5 posts and a newsletter. Ready to review.\"",
   },
   {
-    title: "Book a consultation",
-    body: "An owner's agent can check your calendar and book a call, or hand the owner a prefilled link to confirm.",
+    title: "Weekly marketing report",
+    body: "Pulls numbers from your ads, social, website and sales into one plain-English page every Monday.",
+    example: "\"Leads up 18% week over week. Meta cost per lead went up; Google stayed flat.\"",
   },
   {
-    title: "Listings agents can see",
-    body: "Your AppFolio or Buildium listings shown as real page content with a showing-request link, not hidden in a widget.",
+    title: "Reviews",
+    body: "Asks happy customers for a Google review at the right moment and drafts replies to new reviews.",
+    example: "\"Two new 5-star reviews. Replies drafted. One 3-star needs your eyes.\"",
   },
   {
-    title: "Browser agent tools",
-    body: "WebMCP tools on your site, the standard ChatGPT's desktop browser already uses to act on pages directly.",
+    title: "Win-back campaigns",
+    body: "Finds customers who haven't come back in a while and sends them a timed offer by email or text.",
+    example: "\"146 customers haven't visited in 90 days. Draft offer ready to send.\"",
+  },
+  {
+    title: "Competitor watch",
+    body: "Checks what competitors post, change and advertise, and sends a short digest of what's worth reacting to.",
+    example: "\"Your top competitor launched a holiday bundle. Here's what they're charging.\"",
   },
 ];
 
 const STEPS: { label: string; title: string; body: string }[] = [
   {
     label: "Step 01",
-    title: "Free agent check",
-    body: "I ask ChatGPT, Gemini, Claude and Grok to find and book a property manager in your area, and record what happens on your site and two competitors'.",
+    title: "Email me your week",
+    body: "Tell me the tasks that eat your time and the tools you use. I'll reply with the first three things your agent should take over.",
   },
   {
     label: "Step 02",
-    title: "Fixed-price build",
-    body: "I add the agent layer on top of your current site. No redesign. You give read access to your listings feed and calendar.",
+    title: "I set it up on your tools",
+    body: "Your email, calendar, CRM and the rest. No new software to learn. You message it like you would an assistant.",
   },
   {
     label: "Step 03",
-    title: "Re-test in 30 days",
-    body: "Same prompts, recorded again, so you can see the difference on your own site.",
+    title: "You approve, it learns",
+    body: "Drafts come to you first. As you trust it with a task, it handles that task on its own.",
   },
   {
     label: "Step 04",
-    title: "Monthly report (optional)",
-    body: "Which agents called your site and what they did, plus a re-test each month as the standards change.",
+    title: "I keep tuning it",
+    body: "I check its work, fix what's off, and add the next task as your business changes.",
   },
 ];
 
 const FAQ: { q: string; a: string }[] = [
   {
-    q: "Do I need a new website?",
-    a: "No. The agent layer sits on top of the site you have. If your site is fully hosted by a platform that won't accept custom code, I'll tell you on the free check.",
+    q: "Will it send things without me?",
+    a: "Not until you say so. Everything starts as a draft you approve. You decide which tasks it can finish on its own.",
   },
   {
-    q: "Doesn't Zillow or Apartments.com already cover this?",
-    a: "They cover search inside ChatGPT, and they send those leads to their own listings. This is for when an agent looks at your company directly: an owner comparing managers, or a renter who already has your name.",
+    q: "What tools does it work with?",
+    a: "The ones you already use: Gmail or Outlook, Google Calendar and Drive, GoHighLevel, HubSpot, Notion, Slack and more. If something can't connect, I'll tell you before we start.",
   },
   {
-    q: "Is AI agent traffic real yet?",
-    a: "It's early. Buyer use is growing fast, renter use is smaller. Nobody can promise you a number of agent leads yet, so I don't. What I guarantee is that agents can read your site and book with you.",
+    q: "Is this a chatbot on my website?",
+    a: "No. It works behind the scenes on your business, like an operations assistant, not a widget your customers talk to.",
   },
   {
-    q: "What about fair housing?",
-    a: "The tools only share listing facts like price, beds, pet policy and availability. Nothing filters or describes listings by anything tied to a protected class.",
+    q: "What does it cost?",
+    a: "It depends on how many tasks it takes over and which tools it connects to. Email me what you need and I'll send you a straight answer.",
   },
   {
-    q: "What's the guarantee?",
-    a: "If the 30-day re-test agents still can't read your listings or book a consultation on your site, I keep working free until they can, or refund the setup.",
-  },
-  {
-    q: "Can I see it working first?",
-    a: "Yes. This site runs the same layer. Point your AI agent at tygrowth.com and ask it to book a call with me.",
+    q: "Is my data safe?",
+    a: "It only gets access to the tools you approve, and you can remove that access at any time.",
   },
 ];
+
+function UseCaseList({ items }: { items: UseCase[] }) {
+  return (
+    <ul className="mt-8 grid gap-5 md:grid-cols-2 lg:grid-cols-3">
+      {items.map((u) => (
+        <li key={u.title} className={card}>
+          <div className="flex items-center gap-3">
+            <NodeDot kind="sage" />
+            <h3 className={h3Class}>{u.title}</h3>
+          </div>
+          <p className={`mt-3 ${body}`}>{u.body}</p>
+          <p className="mt-4 rounded-xl bg-ops-cream px-4 py-3 text-[14.5px] leading-[1.5] text-ops-ink">
+            <span className="mr-1.5 font-semibold text-ops-moss">Your agent:</span>
+            {u.example}
+          </p>
+        </li>
+      ))}
+    </ul>
+  );
+}
 
 export default function AgentReadyPage() {
   return (
@@ -156,23 +189,22 @@ export default function AgentReadyPage() {
             className="ops-corner-glow pointer-events-none absolute -left-10 -top-10 h-[360px] w-[360px]"
           />
           <div className={`relative ${container} pb-16 pt-14 md:pb-24 md:pt-20`}>
-            <div className="max-w-[760px]">
-              <Eyebrow>For property managers</Eyebrow>
+            <div className="max-w-[780px]">
+              <Eyebrow>Your own personal agent</Eyebrow>
               <h1
                 id="agent-hero-heading"
                 className="mt-5 font-ops-heading text-[36px] font-extrabold leading-[1.06] tracking-[-0.02em] text-ops-ink text-balance sm:text-[40px] md:text-[52px]"
               >
-                When an AI agent shops for a property manager, <span className="text-ops-moss">can it book you?</span>
+                Business and marketing ops, <span className="text-ops-moss">handled by your own AI agent.</span>
               </h1>
               <p className="mt-6 max-w-[36rem] text-ops-text">
-                Owners and renters are handing their search to ChatGPT and Gemini. Agents skip sites they can&apos;t
-                read and pick the ones they can act on. I make your site one they can act on: your services, your
-                listings, and a booked consultation.
+                The follow-ups, reports, inbox and admin that eat your week. I set up an agent on the tools you already
+                use, it does the work, and you approve what goes out.
               </p>
               <div className="mt-9 flex flex-wrap items-center gap-x-7 gap-y-4">
-                <CheckButton />
-                <a href="#how-it-works" className={textLink}>
-                  See how it works
+                <EmailButton />
+                <a href="#use-cases" className={textLink}>
+                  See what it can do
                   <ArrowRight className="size-4" aria-hidden="true" />
                 </a>
               </div>
@@ -180,86 +212,37 @@ export default function AgentReadyPage() {
           </div>
         </section>
 
-        {/* DATA */}
-        <section aria-labelledby="agent-data-heading" className="scroll-mt-20">
+        {/* USE CASES: BUSINESS */}
+        <section id="use-cases" aria-labelledby="agent-business-heading" className="scroll-mt-20 bg-ops-card/60 py-20 md:py-28">
           <div className={container}>
-            <div className="border-y border-ops-line/60 py-12">
-              <h2 id="agent-data-heading" className="sr-only">
-                The numbers
-              </h2>
-              <ul className="grid gap-8 md:grid-cols-3">
-                {STATS.map((s) => (
-                  <li key={s.value}>
-                    <p className="font-ops-heading text-[44px] font-extrabold leading-none tracking-[-0.02em] text-ops-ink">
-                      {s.value}
-                    </p>
-                    <p className={`mt-3 ${body}`}>{s.label}</p>
-                    <a
-                      href={s.href}
-                      target="_blank"
-                      rel="noopener noreferrer"
-                      className="mt-2 inline-block text-[13px] text-ops-text/70 underline-offset-4 hover:underline"
-                    >
-                      {s.source}
-                      <span className="sr-only"> (opens in a new tab)</span>
-                    </a>
-                  </li>
-                ))}
-              </ul>
-            </div>
-          </div>
-        </section>
-
-        {/* PROBLEM */}
-        <section aria-labelledby="agent-problem-heading" className="py-20 md:py-28">
-          <div className={`${container} grid gap-10 md:grid-cols-[1fr_1fr] md:gap-16`}>
-            <div>
-              <Eyebrow>The problem</Eyebrow>
-              <h2 id="agent-problem-heading" className={`mt-4 ${h2Class}`}>
-                Your listings might be invisible to agents.
-              </h2>
-            </div>
-            <div className={`grid gap-5 ${body}`}>
-              <p>
-                Most agents read a page&apos;s HTML to figure out what&apos;s on it. If your listings load inside an
-                AppFolio iframe or a JavaScript widget, the agent sees an empty page.
-              </p>
-              <p>
-                When I tested this, my own agent compared several sites, found that some were too much work to read,
-                and dropped them. It recommended the ones it could use quickly. Your competitors don&apos;t know
-                this is happening either.
-              </p>
-            </div>
-          </div>
-        </section>
-
-        {/* WHAT I BUILD */}
-        <section aria-labelledby="agent-build-heading" className="bg-ops-card/60 py-20 md:py-28">
-          <div className={container}>
-            <Eyebrow>What I build</Eyebrow>
-            <h2 id="agent-build-heading" className={`mt-4 max-w-[40rem] ${h2Class}`}>
-              An agent layer on top of the site you already have.
+            <Eyebrow>Business ops</Eyebrow>
+            <h2 id="agent-business-heading" className={`mt-4 max-w-[40rem] ${h2Class}`}>
+              The admin that keeps the lights on.
             </h2>
-            <ul className="mt-12 grid gap-6 md:grid-cols-2">
-              {BUILD.map((b) => (
-                <li key={b.title} className={card}>
-                  <div className="flex items-center gap-3">
-                    <NodeDot kind="sage" />
-                    <h3 className={h3Class}>{b.title}</h3>
-                  </div>
-                  <p className={`mt-3 ${body}`}>{b.body}</p>
-                </li>
-              ))}
-            </ul>
+            <UseCaseList items={BUSINESS_OPS} />
+          </div>
+        </section>
+
+        {/* USE CASES: MARKETING */}
+        <section aria-labelledby="agent-marketing-heading" className="py-20 md:py-28">
+          <div className={container}>
+            <Eyebrow>Marketing ops</Eyebrow>
+            <h2 id="agent-marketing-heading" className={`mt-4 max-w-[40rem] ${h2Class}`}>
+              The marketing that never gets done.
+            </h2>
+            <UseCaseList items={MARKETING_OPS} />
+            <p className={`mt-8 max-w-[44rem] ${body}`}>
+              These are examples, not a menu. Your agent gets built around the tasks that cost you the most time.
+            </p>
           </div>
         </section>
 
         {/* HOW IT WORKS */}
-        <section id="how-it-works" aria-labelledby="agent-how-heading" className="scroll-mt-20 py-20 md:py-28">
+        <section id="how-it-works" aria-labelledby="agent-how-heading" className="scroll-mt-20 bg-ops-card/60 py-20 md:py-28">
           <div className={container}>
             <Eyebrow>How it works</Eyebrow>
             <h2 id="agent-how-heading" className={`mt-4 max-w-[40rem] ${h2Class}`}>
-              See it fail, fix it, see it work.
+              Start with one task. Hand over the next when you trust it.
             </h2>
             <ol className="mt-12 grid gap-10 md:grid-cols-2 lg:grid-cols-4">
               {STEPS.map((s) => (
@@ -274,7 +257,7 @@ export default function AgentReadyPage() {
         </section>
 
         {/* FAQ */}
-        <section id="faq" aria-labelledby="agent-faq-heading" className="scroll-mt-20 pb-20 md:pb-28">
+        <section id="faq" aria-labelledby="agent-faq-heading" className="scroll-mt-20 py-20 md:py-28">
           <div className={`${container} max-w-4xl`}>
             <Eyebrow>FAQ</Eyebrow>
             <h2 id="agent-faq-heading" className={`mt-4 ${h2Class}`}>
@@ -294,21 +277,22 @@ export default function AgentReadyPage() {
         </section>
 
         {/* CTA */}
-        <section aria-labelledby="agent-cta-heading" className="bg-ops-ink py-20 text-ops-cream md:py-24">
+        <section aria-labelledby="agent-cta-heading" className="ops-dark bg-ops-ink py-20 text-ops-cream md:py-24">
           <div className={`${container} text-center`}>
             <h2
               id="agent-cta-heading"
               className="font-ops-heading text-[30px] font-extrabold leading-[1.12] tracking-[-0.02em] text-balance md:text-[42px]"
             >
-              Find out what agents see on your site.
+              Tell me what eats your week.
             </h2>
             <p className="mx-auto mt-5 max-w-[34rem] text-ops-cream/85">
-              Book 20 minutes. I&apos;ll run the agent check first and show you the recording on the call. If your
-              site already works, I&apos;ll tell you.
+              Email me the tasks you&apos;d hand off first and the tools you use. I&apos;ll reply with what your agent
+              would take over and what it costs.
             </p>
             <div className="mt-9">
-              <CheckButton variant="lime" />
+              <EmailButton variant="lime" />
             </div>
+            <p className="mt-5 text-[15px] text-ops-cream/75">{EMAIL}</p>
           </div>
         </section>
       </main>
