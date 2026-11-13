@@ -1,7 +1,7 @@
 import Link from "next/link";
 import { ArrowUpRight } from "lucide-react";
 import { Wordmark } from "./motifs";
-import { BOOKING_URL, EMAIL, LINKEDIN_SYSTEMS_URL, LINKEDIN_URL } from "./shared";
+import { BOOKING_URL, EMAIL, LINKEDIN_URL, SERVICES } from "./shared";
 
 const linkClass =
   "inline-flex items-center gap-1 rounded-sm text-ops-text transition-colors hover:text-ops-moss hover:underline underline-offset-4";
@@ -9,47 +9,36 @@ const linkClass =
 export function HomeFooter() {
   return (
     <footer className="border-t border-ops-line/70 bg-ops-cream">
-      <div className="mx-auto grid max-w-6xl gap-10 px-5 py-12 text-sm md:grid-cols-[1.4fr_1fr] md:px-6 md:py-14">
+      <div className="mx-auto grid max-w-6xl gap-10 px-5 py-12 text-sm md:grid-cols-[1.4fr_1fr_1fr] md:px-6 md:py-14">
         <div>
           <Link href="/" className="inline-block rounded-md" aria-label="TYGrowth.com home">
             <Wordmark />
           </Link>
           <p className="mt-4 max-w-xs leading-relaxed text-ops-text/85">
-            Ops, automation, and AI for social media agencies.
+            Marketing partner for B2B firms that don’t have a marketing person yet.
           </p>
           <p className="mt-2 text-ops-text/70">Celebration, FL</p>
         </div>
 
-        <nav aria-label="Footer">
-          <ul className="grid gap-3 md:justify-items-start">
+        <nav aria-label="Services">
+          <p className="text-[12px] font-semibold uppercase tracking-[0.12em] text-ops-moss">Services</p>
+          <ul className="mt-4 grid gap-3">
+            {SERVICES.map((s) => (
+              <li key={s.href}>
+                <Link href={s.href} className={linkClass}>
+                  {s.label}
+                </Link>
+              </li>
+            ))}
+          </ul>
+        </nav>
+
+        <nav aria-label="Contact">
+          <p className="text-[12px] font-semibold uppercase tracking-[0.12em] text-ops-moss">Contact</p>
+          <ul className="mt-4 grid gap-3">
             <li>
-              <Link href="/work" className={linkClass}>
-                Work and portfolio
-              </Link>
-            </li>
-            <li>
-              <a href="/#community" className={linkClass}>
-                Free agency owner group
-              </a>
-            </li>
-            <li>
-              <Link href={LINKEDIN_SYSTEMS_URL} className={linkClass}>
-                For founders: LinkedIn Content Systems
-              </Link>
-            </li>
-            <li>
-              <Link href="/agent-ready" className={linkClass}>
-                Your own personal AI agent
-              </Link>
-            </li>
-            <li>
-              <Link href="/holiday" className={linkClass}>
-                Black Friday campaigns for local businesses
-              </Link>
-            </li>
-            <li>
-              <a href={LINKEDIN_URL} target="_blank" rel="noopener noreferrer" className={linkClass}>
-                LinkedIn
+              <a href={BOOKING_URL} target="_blank" rel="noopener noreferrer" className={linkClass}>
+                Book a call
                 <ArrowUpRight className="size-3.5" aria-hidden="true" />
                 <span className="sr-only"> (opens in a new tab)</span>
               </a>
@@ -60,8 +49,8 @@ export function HomeFooter() {
               </a>
             </li>
             <li>
-              <a href={BOOKING_URL} target="_blank" rel="noopener noreferrer" className={linkClass}>
-                Book a call
+              <a href={LINKEDIN_URL} target="_blank" rel="noopener noreferrer" className={linkClass}>
+                LinkedIn
                 <ArrowUpRight className="size-3.5" aria-hidden="true" />
                 <span className="sr-only"> (opens in a new tab)</span>
               </a>

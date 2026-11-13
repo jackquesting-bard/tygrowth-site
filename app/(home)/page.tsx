@@ -1,17 +1,31 @@
 import type { Metadata } from "next";
-import type { ReactNode } from "react";
-import Image from "next/image";
-import Link from "next/link";
-import { inter, jakarta } from "@/components/home/fonts";
-import { ArrowDown, ArrowRight, Plus } from "lucide-react";
-import { HomeHeader } from "@/components/home/HomeHeader";
-import { HomeFooter } from "@/components/home/HomeFooter";
+import { ArrowDown } from "lucide-react";
 import AgentTools from "@/components/agent/AgentTools";
 import AgentJsonLd from "@/components/agent/AgentJsonLd";
 import AgentSection from "@/components/agent/AgentSection";
 import {
-  CommunityCircuit,
-  CtaCircuit,
+  BRANDS,
+  BookButton,
+  Eyebrow,
+  FaqSection,
+  FinalCta,
+  FitSection,
+  LogoStrip,
+  MoreLink,
+  NodeLines,
+  OpsPage,
+  PullQuote,
+  Timeline,
+  cardClass,
+  container,
+  h1Class,
+  h2Class,
+  h3Class,
+  sectionClass,
+  smallBody,
+  type TimelineItem,
+} from "@/components/home/blocks";
+import {
   HeroCircuit,
   HeroCircuitMobile,
   IconAgents,
@@ -20,697 +34,376 @@ import {
   NodeDot,
   SproutMark,
   SproutNode,
-  type NodeKind,
 } from "@/components/home/motifs";
-import {
-  BOOKING_URL,
-  LINKEDIN_SYSTEMS_URL,
-  btnLime,
-  btnPrimary,
-  textLink,
-} from "@/components/home/shared";
+import { SERVICES, textLink } from "@/components/home/shared";
 
 /* =====================================================================
-   OFFER DETAILS
-   Edit these in one place.
+   HOME: Marketing partner for B2B firms without a marketing person.
+   Built from what clients like a NetSuite partner firm and a fractional
+   CFO firm said they needed. Service details live under /services.
    ===================================================================== */
-const COMMUNITY_URL = "https://tally.so/r/XxVB6O";
 
-/* Simply Jess case study numbers. Swap in the win-back campaign results once they're in. */
-const CASE_STAT = "4 → 1";
-const CASE_STAT_LABEL = "contact lists merged into one CRM";
-const CASE_OPTED_IN = "2,446";
-
-/* Pull quote under the Trusted by strip. The block hides itself if this is empty. */
 const JESS_QUOTE =
   "My problem was always not getting the content. My problem was executing the content and going into social media. So by us doing this and getting into a systematic flow… I mean, game changer.";
-const SHOW_TESTIMONIAL = JESS_QUOTE.trim() !== "";
-
-/* Logos: true shows the image from /public/logos/. false shows the name as styled text instead. */
-const HAS_SIMPLY_JESS_LOGO = true; // /logos/logo-simply-jess-agency.png
-const HAS_BECKS_LOGO = false; // /logos/logo-becksthesocial.png (not uploaded yet)
-
-/* Where each Trusted by logo links to. */
-const CLIENT_LINKS = {
-  simplyJess: "https://simplyjessagency.com/",
-  visualsByJess: "https://visualsbyjess.com/",
-  becks: "https://www.instagram.com/becksthesocial/",
-};
-
 
 export const metadata: Metadata = {
-  title: { absolute: "TY Growth | Back-Office Partner for Social Media Agencies" },
+  title: { absolute: "TY Growth | Marketing Partner for B2B Firms Without a Marketing Person" },
   description:
-    "I run the back office for small social media agencies, then build CRM, follow-up, and review systems for your clients under your agency's name.",
+    "A marketing partner for founder-led B2B firms that grow on referrals. I find your best-fit clients, keep you in front of them, and build the sales materials that close. About an hour a week of your time.",
   icons: { icon: "/icons/sprout.svg" },
 };
 
-/* ---------- Small helpers ---------- */
-
-const container = "mx-auto max-w-6xl px-5 md:px-6";
-const h2Class =
-  "font-ops-heading text-[30px] font-extrabold leading-[1.12] tracking-[-0.02em] text-ops-ink text-balance md:text-[42px]";
-const h3Class =
-  "font-ops-heading text-[20px] font-bold leading-snug tracking-[-0.02em] text-ops-ink md:text-[22px]";
-const cardSurface =
-  "rounded-2xl bg-ops-card shadow-[0_1px_2px_rgba(11,43,35,0.04),0_12px_32px_-18px_rgba(11,43,35,0.18)]";
-const cardClass = `${cardSurface} border border-ops-line/60`;
-const smallBody = "text-[16px] leading-[1.65] text-ops-text md:text-[17px]";
-
-/* Recolors the black logo files to ops-ink (#0B2B23). */
-const logoTint =
-  "[filter:brightness(0)_saturate(100%)_invert(12%)_sepia(80%)_saturate(300%)_hue-rotate(115deg)]";
-
-function Eyebrow({ children, className = "" }: { children: ReactNode; className?: string }) {
-  return (
-    <p
-      className={`text-[13px] font-semibold uppercase leading-none tracking-[0.12em] text-ops-moss ${className}`}
-    >
-      {children}
-    </p>
-  );
-}
-
-const NewTab = () => <span className="sr-only"> (opens in a new tab)</span>;
-
-function LogoLink({ href, label, children }: { href: string; label: string; children: ReactNode }) {
-  return (
-    <a
-      href={href}
-      target="_blank"
-      rel="noopener noreferrer"
-      className="block rounded-md transition-opacity duration-200 hover:opacity-70"
-    >
-      {children}
-      <span className="sr-only"> ({label}, opens in a new tab)</span>
-    </a>
-  );
-}
-
-function BookButton({ className = "", variant = "primary" }: { className?: string; variant?: "primary" | "lime" }) {
-  return (
-    <a
-      href={BOOKING_URL}
-      target="_blank"
-      rel="noopener noreferrer"
-      className={`${variant === "lime" ? btnLime : btnPrimary} ${className}`}
-    >
-      Book a 20-minute call
-      <NewTab />
-    </a>
-  );
-}
-
-/** Node list joined by one thin circuit line. Vertical on mobile, horizontal from lg up. */
-type TimelineItem = { label: string; title: ReactNode; body?: ReactNode; node: NodeKind };
-
-function Timeline({ items, colsClass }: { items: TimelineItem[]; colsClass: string }) {
-  return (
-    <ol className={`grid gap-10 lg:gap-x-8 ${colsClass}`}>
-      {items.map((item, i) => (
-        <li key={item.label} className="relative pl-10 lg:pl-0 lg:pt-12">
-          {i < items.length - 1 && (
-            <span
-              aria-hidden="true"
-              className="absolute -bottom-10 left-[5.25px] top-3 w-[1.5px] bg-ops-line lg:-right-8 lg:bottom-auto lg:left-3 lg:top-[5.25px] lg:h-[1.5px] lg:w-auto"
-            />
-          )}
-          <NodeDot
-            kind={item.node}
-            className={`absolute left-0 top-0.5 lg:top-0 ${item.node === "lime" ? "ops-pulse" : ""}`}
-          />
-          <Eyebrow>{item.label}</Eyebrow>
-          <h3 className="mt-3 font-ops-heading text-[20px] font-bold leading-snug tracking-[-0.02em] text-ops-ink">
-            {item.title}
-          </h3>
-          {item.body && <p className={`mt-3 ${smallBody}`}>{item.body}</p>}
-        </li>
-      ))}
-    </ol>
-  );
-}
-
-function BulletList({ items, node = "sage" }: { items: ReactNode[]; node?: NodeKind }) {
-  return (
-    <ul className="grid gap-3">
-      {items.map((item, i) => (
-        <li key={i} className="flex gap-3">
-          <NodeDot kind={node} className="mt-[7px]" />
-          <span>{item}</span>
-        </li>
-      ))}
-    </ul>
-  );
-}
-
-/** Pull quote card. */
-function PullQuote({
-  quote,
-  name,
-  detail,
-  showLogo = false,
-}: {
-  quote: string;
-  name: string;
-  detail: string;
-  showLogo?: boolean;
-}) {
-  return (
-    <figure className={`${cardClass} relative overflow-hidden px-7 py-10 md:px-14 md:py-14`}>
-      <SproutMark className="absolute right-6 top-6 size-8 md:right-8 md:top-8 md:size-10" />
-      <span
-        aria-hidden="true"
-        className="block font-ops-heading text-[64px] font-extrabold leading-[0.6] text-ops-line"
-      >
-        &ldquo;
-      </span>
-      <blockquote className="mt-4 font-ops-heading text-[22px] font-semibold leading-[1.4] tracking-[-0.01em] text-ops-ink md:text-[28px]">
-        <p>{quote}</p>
-      </blockquote>
-      <figcaption className="mt-8 flex flex-col gap-4 border-t border-ops-line/60 pt-6 sm:flex-row sm:items-center sm:justify-between">
-        <span className="text-[16px] text-ops-text">
-          <span className="font-semibold text-ops-ink">{name}</span>, {detail}
-        </span>
-        {showLogo && HAS_SIMPLY_JESS_LOGO && (
-          <Image
-            src="/logos/logo-simply-jess-agency.png"
-            alt="Simply Jess Agency logo"
-            width={643}
-            height={194}
-            className={`h-8 w-auto self-start sm:self-auto ${logoTint}`}
-          />
-        )}
-      </figcaption>
-    </figure>
-  );
-}
-
-/* ---------- Content ---------- */
-
 const PROBLEMS = [
-  "Onboarding lives in your head instead of in a process.",
-  "Client info and contacts are spread across five different tools.",
-  "Follow-ups, reports, and decks get done whenever you find the time.",
-  "Your content calendar runs on group chats and reminders.",
+  "New work mostly comes from referrals, so growth stalls when those slow down.",
+  "Your LinkedIn has gone quiet, and it’s usually the first place a referral checks you out.",
+  "The company deck and service one-pagers don’t match how you sell today.",
+  "You’ve tried a freelancer or agency, and the content could’ve been about any firm in your space.",
 ];
 
-const SERVICES = [
+const ROLE = [
   {
-    label: "For your agency",
-    title: "Your back office, handled",
-    body: "You hand me the ops work eating your week, and I take it over. We meet once a week to go over what’s next.",
-    items: [
-      "Client onboarding and intake forms",
-      "CRM setup, with every contact in one place",
-      "Client tracking and project boards",
-      "Content workflows, from raw files to scheduled posts",
-      "Reports, pitch decks, and strategy docs",
-    ],
-    Icon: IconOpsSystems,
+    title: "Find your best-fit clients",
+    body: "Who actually buys from you, why they buy, and what they ask before signing. Pulled from your past wins, sales calls and client stories, so everything else aims at the right people.",
+    node: "ink" as const,
   },
   {
-    label: "For your clients",
-    title: "Backend services you can sell",
-    body: "I build systems for your clients under your agency’s name. You own the relationship and the sale. I build and run it, and we split what the client pays.",
-    items: [
-      "CRM and lead follow-up",
-      "Win-back campaigns to past customers",
-      "Google review requests",
-      "Event and promo messaging by text and email",
-    ],
-    Icon: IconAutomation,
+    title: "Stay in front of them",
+    body: "LinkedIn for you and your company page, a monthly email to clients and referral partners, and blog posts when they help. Built from your stories and opinions, so you’re the first call when they’re ready.",
+    node: "ring" as const,
+  },
+  {
+    title: "Sales materials that close",
+    body: "Company deck, service one-pagers and sales letters, plus partner versions that follow a partner’s brand rules. Leads who’ve seen your site want something to forward.",
+    node: "sage" as const,
+  },
+  {
+    title: "Referral relationships",
+    body: "Past clients and referral partners stay warm, and partners get something easy to pass along. We track who sends what, so you know where the work comes from.",
+    node: "lime" as const,
   },
 ];
+
+const SERVICE_ICONS = [IconOpsSystems, IconOpsSystems, IconAutomation, IconAgents];
 
 const STEPS: TimelineItem[] = [
   {
-    label: "Step 01",
-    title: "20-minute fit call",
-    body: "We go through your week. If I’m not a fit, I’ll tell you.",
+    label: "Weeks 1 to 2",
+    title: "Setup",
+    body: "An interview, a voice guide, a look at what you already have, and starting numbers for LinkedIn, your website and email.",
     node: "ink",
   },
   {
-    label: "Step 02",
-    title: "Start with your list",
-    body: "You hand me the tasks you’re stuck doing. I take them over, and we meet once a week.",
+    label: "Every week or two",
+    title: "Check-in",
+    body: "I bring at least five ideas from your industry’s news. You bring what happened that week.",
     node: "ring",
   },
   {
-    label: "Step 03",
-    title: "Turn repeats into systems",
-    body: "Work that repeats becomes a template, an automation, or an AI agent, so your hours come back.",
+    label: "In between",
+    title: "I build and ship",
+    body: "You approve, and posts still go out when you’re traveling or with clients.",
     node: "sage",
   },
   {
-    label: "Step 04",
-    title: "Add client services",
-    body: "When you’re ready, I build backend systems for your clients. You sell it, I build it, we split it.",
+    label: "Every month",
+    title: "Review",
+    body: "What moved, where the time went, and what we focus on next.",
     node: "lime",
   },
 ];
 
-const FAQS: { q: string; a: ReactNode }[] = [
+const STANDARDS = [
+  "If it could’ve been written about your competitor, it doesn’t go out. Everything starts from your stories, opinions and client work.",
+  "I’ll tell you when I haven’t done something before. If I say I’ll look into it, I will.",
+  "I’ll have opinions, and I’ll show you the data behind them.",
+  "You get starting numbers in the first two weeks, so every monthly review compares against something real.",
+  "Three months to start. After that it’s month to month, and only if we both want to keep going.",
+];
+
+const FAQS = [
   {
-    q: "Is this software or a service?",
-    a: "A service. I do the work myself inside the tools you already use, and build automations and AI agents where they save time.",
+    q: "How is this different from hiring a marketing coordinator?",
+    a: "A coordinator needs a plan and someone to check their work. I bring the plan, do the work, and tell you what I’d change. You spend about an hour a week with me, mostly on the parts only you can do.",
   },
   {
     q: "How is it priced?",
-    a: "Your agency work is a flat monthly rate, set on the call once we see what’s on your plate. Client builds are priced per project, and we split what your client pays.",
+    a: "A flat monthly rate, scoped on the call by what’s on your plate. Most engagements start around $3,000 a month, beginning with a three-month engagement that includes the two-week setup.",
   },
   {
-    q: "Who owns the client relationship?",
-    a: "You do. Client work goes out under your agency’s name, and I stay behind the scenes.",
+    q: "Do you use AI?",
+    a: "Yes, for research and first drafts. Nothing goes out that isn’t built on your input, and you approve everything before it ships.",
   },
   {
-    q: "Do I need GoHighLevel already?",
-    a: "No. I can set it up, or work with what you have.",
+    q: "Do you guarantee leads?",
+    a: "No. I’m responsible for the work getting done, done well, and on time. We track which posts, emails and materials turn into conversations, and adjust from there.",
   },
   {
     q: "What do you need from me?",
-    a: "Logins, a list of what’s eating your week, and a weekly call.",
+    a: "About an hour a week, access to your LinkedIn and existing materials, and honest feedback on drafts.",
   },
   {
-    q: "Do you guarantee revenue?",
-    a: "No. I’m responsible for the systems getting built and running, and the time they give back to you. On client campaigns, my part ends at replies and booked calls. Closing is yours.",
-  },
-  {
-    q: "You’re early. Why trust you?",
-    a: "I am early, so I keep my client list small and you work with me directly. We start with the tasks already on your list, so you see the work before anything bigger.",
+    q: "We run an agency. Is this for us?",
+    a: (
+      <>
+        Yes, agencies sell to other businesses too. There’s a version built for agency owners that also covers your
+        back office and client builds.{" "}
+        <MoreLink href="/services/agency-ops">See Agency Ops</MoreLink>
+      </>
+    ),
   },
 ];
 
 export default function HomePage() {
   return (
-    <div
-      className={`theme-ops ${jakarta.variable} ${inter.variable} relative min-h-screen font-ops-body text-[17px] leading-[1.6] antialiased selection:bg-ops-lime selection:text-ops-ink md:text-[18px]`}
+    <OpsPage
+      after={
+        <>
+          {/* Agent layer: structured data, WebMCP tools for browser agents, and a visible section for HTML-reading agents. */}
+          <AgentJsonLd />
+          <AgentTools />
+          <AgentSection />
+        </>
+      }
     >
-      <div aria-hidden="true" className="ops-grain pointer-events-none fixed inset-0 z-[60] opacity-[0.05]" />
+      {/* HERO */}
+      <section id="top" aria-labelledby="hero-heading" className="relative overflow-hidden">
+        <div
+          aria-hidden="true"
+          className="ops-hero-gradient pointer-events-none absolute inset-y-0 left-0 hidden w-[35%] lg:block"
+        />
+        <div
+          aria-hidden="true"
+          className="ops-corner-glow pointer-events-none absolute -left-10 -top-10 h-[360px] w-[360px] lg:hidden"
+        />
+        <HeroCircuit className="pointer-events-none absolute inset-0 hidden h-full w-full lg:block" />
 
-      <HomeHeader />
-
-      <main>
-        {/* HERO */}
-        <section id="top" aria-labelledby="hero-heading" className="relative overflow-hidden">
-          <div
-            aria-hidden="true"
-            className="ops-hero-gradient pointer-events-none absolute inset-y-0 left-0 hidden w-[35%] lg:block"
-          />
-          <div
-            aria-hidden="true"
-            className="ops-corner-glow pointer-events-none absolute -left-10 -top-10 h-[360px] w-[360px] lg:hidden"
-          />
-          <HeroCircuit className="pointer-events-none absolute inset-0 hidden h-full w-full lg:block" />
-
-          <div className="relative mx-auto max-w-6xl px-5 pb-6 pt-14 md:px-6 md:pt-20 lg:pb-40 lg:pt-24">
-            <div className="lg:ml-[34%] lg:max-w-[740px]">
-              <div className="flex items-end gap-3">
-                <SproutNode className="-mb-[7px] -ml-5 h-11 w-[38px] shrink-0 lg:hidden" />
-                <Eyebrow>Ops partner for social media agencies</Eyebrow>
-              </div>
-
-              <div className="relative mt-5 lg:mt-6">
-                <div
-                  aria-hidden="true"
-                  className="pointer-events-none absolute right-full top-0 mr-3 hidden items-end lg:flex"
-                >
-                  <span className="mb-[8px] h-[1.5px] w-[50vw] bg-gradient-to-r from-transparent via-ops-line/60 to-ops-line" />
-                  <SproutNode className="h-14 w-12 shrink-0" />
-                </div>
-                <h1
-                  id="hero-heading"
-                  className="font-ops-heading text-[36px] font-extrabold leading-[1.06] tracking-[-0.02em] text-ops-ink text-balance sm:text-[40px] md:text-[52px] lg:text-[56px]"
-                >
-                  Your agency’s back office, <span className="text-ops-moss">handled.</span>
-                </h1>
-              </div>
-
-              <p className="mt-6 max-w-[36rem] text-ops-text">
-                I take the ops work off your plate: onboarding, CRM, client tracking, reports, and decks. Anything that
-                repeats becomes a system or an AI agent. When you’re ready, I also build backend services for your
-                clients under your agency’s name.
-              </p>
-
-              <div className="mt-9 flex flex-wrap items-center gap-x-7 gap-y-4">
-                <BookButton />
-                <a href="#what-i-do" className={textLink}>
-                  See what I take on
-                  <ArrowDown className="size-4" aria-hidden="true" />
-                </a>
-              </div>
+        <div className="relative mx-auto max-w-6xl px-5 pb-6 pt-14 md:px-6 md:pt-20 lg:pb-40 lg:pt-24">
+          <div className="lg:ml-[34%] lg:max-w-[740px]">
+            <div className="flex items-end gap-3">
+              <SproutNode className="-mb-[7px] -ml-5 h-11 w-[38px] shrink-0 lg:hidden" />
+              <Eyebrow>Marketing partner for B2B firms</Eyebrow>
             </div>
-          </div>
 
-          <HeroCircuitMobile className="relative block h-[110px] w-full lg:hidden" />
-        </section>
-
-        {/* PROOF STRIP */}
-        <section id="clients" aria-labelledby="clients-heading" className="scroll-mt-20">
-          <div className={container}>
-            <div className="border-y border-ops-line/60 py-10 text-center md:py-12">
-              <h2
-                id="clients-heading"
-                className="text-[13px] font-semibold uppercase tracking-[0.12em] text-ops-moss"
+            <div className="relative mt-5 lg:mt-6">
+              <div
+                aria-hidden="true"
+                className="pointer-events-none absolute right-full top-0 mr-3 hidden items-end lg:flex"
               >
-                Trusted by
-              </h2>
-              <ul className="mt-7 flex flex-wrap items-center justify-center gap-x-12 gap-y-7 md:gap-x-20">
-                <li>
-                  <LogoLink href={CLIENT_LINKS.simplyJess} label="website">
-                    {HAS_SIMPLY_JESS_LOGO ? (
-                      <Image
-                        src="/logos/logo-simply-jess-agency.png"
-                        alt="Simply Jess Agency logo"
-                        width={643}
-                        height={194}
-                        className={`h-10 w-auto md:h-12 ${logoTint}`}
-                      />
-                    ) : (
-                      <span
-                        role="img"
-                        aria-label="Simply Jess Agency logo"
-                        className="block font-ops-heading text-[22px] font-semibold tracking-[-0.01em] text-ops-text md:text-[26px]"
-                      >
-                        Simply Jess Agency
-                      </span>
-                    )}
-                  </LogoLink>
-                </li>
-                <li>
-                  <LogoLink href={CLIENT_LINKS.visualsByJess} label="website">
-                    <Image
-                      src="/logos/logo-visuals-by-jess.png"
-                      alt="Visuals By Jess logo"
-                      width={245}
-                      height={388}
-                      className={`h-14 w-auto ${logoTint}`}
-                    />
-                  </LogoLink>
-                </li>
-                <li>
-                  <LogoLink href={CLIENT_LINKS.becks} label="Instagram">
-                    {HAS_BECKS_LOGO ? (
-                      <Image
-                        src="/logos/logo-becksthesocial.png"
-                        alt="BecksTheSocial logo"
-                        width={400}
-                        height={120}
-                        className={`h-10 w-auto md:h-12 ${logoTint}`}
-                      />
-                    ) : (
-                      <span
-                        role="img"
-                        aria-label="BecksTheSocial logo"
-                        className="block font-ops-heading text-[22px] font-semibold tracking-[-0.01em] text-ops-text md:text-[26px]"
-                      >
-                        BecksTheSocial
-                      </span>
-                    )}
-                  </LogoLink>
-                </li>
-              </ul>
-              <p className="mx-auto mt-7 max-w-2xl text-[14px] leading-relaxed text-ops-text/80">
-                Ops and systems partner for Simply Jess Agency and BecksTheSocial.
-              </p>
-            </div>
-
-            {SHOW_TESTIMONIAL && (
-              <div className="mt-10 md:mt-12">
-                <PullQuote quote={JESS_QUOTE} name="Jess Marquez" detail="Simply Jess Agency" showLogo />
+                <span className="mb-[8px] h-[1.5px] w-[50vw] bg-gradient-to-r from-transparent via-ops-line/60 to-ops-line" />
+                <SproutNode className="h-14 w-12 shrink-0" />
               </div>
-            )}
-          </div>
-        </section>
-
-        {/* PROBLEM */}
-        <section aria-labelledby="problem-heading" className="py-16 md:py-24">
-          <div className={container}>
-            <div className="grid gap-6 lg:grid-cols-12 lg:gap-12">
-              <div className="lg:col-span-6">
-                <Eyebrow>The problem</Eyebrow>
-                <h2 id="problem-heading" className={`mt-4 ${h2Class}`}>
-                  You started an agency to do the work. Now you run the back office.
-                </h2>
-              </div>
-              <p className="text-ops-text lg:col-span-6 lg:pt-9">
-                Every new client adds another login, another spreadsheet, and another follow-up you have to
-                remember. Your CRM, inbox, project board, and calendar each hold part of the picture, and you end up
-                being the glue between them. That glue work eats the hours you meant to spend on clients and growth.
-              </p>
+              <h1 id="hero-heading" className={h1Class}>
+                The marketing person your firm doesn’t have <span className="text-ops-moss">yet.</span>
+              </h1>
             </div>
 
-            <ul className="mt-14 grid gap-x-12 gap-y-9 md:grid-cols-2">
-              {PROBLEMS.map((item, i) => (
-                <li key={item} className="relative border-t border-ops-line/80 pt-6">
-                  <NodeDot kind={i % 2 === 0 ? "ring" : "sage"} className="absolute -top-[6.5px] left-0" />
-                  <p className="font-medium text-ops-ink">{item}</p>
-                </li>
-              ))}
-            </ul>
-          </div>
-        </section>
-
-        {/* WHAT I DO */}
-        <section
-          id="what-i-do"
-          aria-labelledby="what-heading"
-          className="scroll-mt-20 border-t border-ops-line/60 py-16 md:py-24"
-        >
-          <div className={container}>
-            <div className="max-w-3xl">
-              <Eyebrow>What I do</Eyebrow>
-              <h2 id="what-heading" className={`mt-4 ${h2Class}`}>
-                One ops partner, two ways to use me.
-              </h2>
-              <p className="mt-5 max-w-2xl text-ops-text">
-                I start inside your agency. Once your back office runs without you in the middle, I can also build for
-                your clients.
-              </p>
-            </div>
-
-            <div className="mt-12 grid gap-5 md:grid-cols-2 md:gap-6">
-              {SERVICES.map(({ label, title, body, items, Icon }) => (
-                <article key={label} className={`${cardClass} flex flex-col p-7 md:p-9`}>
-                  <Icon className="h-10 w-[88px]" />
-                  <Eyebrow className="mt-7">{label}</Eyebrow>
-                  <h3 className={`mt-3 ${h3Class}`}>{title}</h3>
-                  <p className={`mt-3 ${smallBody}`}>{body}</p>
-                  <div className={`mt-6 border-t border-ops-line/60 pt-6 ${smallBody}`}>
-                    <BulletList items={items} />
-                  </div>
-                </article>
-              ))}
-            </div>
-
-            <div className="mt-5 grid gap-6 rounded-2xl border border-ops-line/70 bg-ops-card p-7 md:mt-6 md:grid-cols-[auto_1fr] md:items-center md:gap-8 md:p-9">
-              <IconAgents className="h-10 w-[88px]" />
-              <div>
-                <h3 className={h3Class}>It gets lighter every month.</h3>
-                <p className={`mt-2 ${smallBody}`}>
-                  Anything we do more than twice becomes a template, an automation, or an AI agent. The same work takes
-                  less time each month, and my time moves to the next thing on your list.
-                </p>
-              </div>
-            </div>
-
-            <p className="mt-6 text-[14px] text-ops-text/80">
-              Not included: software subscriptions, SMS and email usage fees, ad spend.
+            <p className="mt-6 max-w-[36rem] text-ops-text">
+              For founder-led firms that grow on referrals and have nobody focused on marketing. I work out who you sell
+              to best, keep you in front of them every week, and build the decks and one-pagers your leads and partners
+              actually read. You spend about an hour a week with me, and there’s nobody new to manage.
             </p>
-          </div>
-        </section>
 
-        {/* HOW IT WORKS */}
-        <section
-          id="how-it-works"
-          aria-labelledby="how-heading"
-          className="scroll-mt-20 border-t border-ops-line/60 py-16 md:py-24"
-        >
-          <div className={container}>
-            <div className="max-w-2xl">
-              <Eyebrow>How it works</Eyebrow>
-              <h2 id="how-heading" className={`mt-4 ${h2Class}`}>
-                Start small. Build from there.
-              </h2>
-            </div>
-            <div className="mt-14 md:mt-16">
-              <Timeline items={STEPS} colsClass="lg:grid-cols-4" />
-            </div>
-          </div>
-        </section>
-
-        {/* RESULTS */}
-        <section
-          id="results"
-          aria-labelledby="results-heading"
-          className="scroll-mt-20 border-t border-ops-line/60 py-16 md:py-24"
-        >
-          <div className={container}>
-            <Eyebrow>Results</Eyebrow>
-            <h2 id="results-heading" className={`mt-4 ${h2Class}`}>
-              What I’ve built so far
-            </h2>
-
-            <article className={`${cardClass} mt-12 overflow-hidden`}>
-              <div className="grid lg:grid-cols-[1fr_340px]">
-                <div className="p-7 md:p-10">
-                  <h3 className="font-ops-heading text-[24px] font-extrabold tracking-[-0.02em] text-ops-ink md:text-[28px]">
-                    Simply Jess Agency
-                  </h3>
-                  <p className="mt-1 text-ops-text/80">An events and creative agency</p>
-                  <div className={`mt-7 ${smallBody}`}>
-                    <BulletList
-                      items={[
-                        "Merged contacts from Shopify, her phone, her event app, and email into one CRM",
-                        <>
-                          {CASE_OPTED_IN} past customers opted in to email and ready for her first win-back campaign
-                        </>,
-                        "Built the content workflow her editors use, from raw files to scheduled posts",
-                        "Her white-label tech partner: she sells CRM and automation to her clients, and I build it",
-                      ]}
-                    />
-                  </div>
-                </div>
-                <div className="ops-dark relative flex flex-col justify-center overflow-hidden bg-gradient-to-br from-ops-forest to-ops-ink px-7 pb-8 pt-16 md:px-10 md:pb-10">
-                  <CommunityCircuit glowId="ops-case-glow" className="absolute left-0 top-6 h-7 w-[220px] opacity-60" />
-                  <p className="font-ops-heading text-[52px] font-extrabold leading-none tracking-[-0.02em] text-ops-cream md:text-[60px]">
-                    {CASE_STAT}
-                  </p>
-                  <p className="mt-3 text-ops-cream/85">{CASE_STAT_LABEL}</p>
-                </div>
-              </div>
-            </article>
-
-            <article className={`${cardClass} mt-5 p-7 md:mt-6 md:p-10`}>
-              <h3 className="font-ops-heading text-[22px] font-extrabold tracking-[-0.02em] text-ops-ink md:text-[24px]">
-                BecksTheSocial
-              </h3>
-              <p className="mt-1 text-ops-text/80">A Miami social media agency</p>
-              <p className={`mt-5 max-w-3xl ${smallBody}`}>
-                Weekly ops support for the owner. I take over the tasks she hands me, and each week we pick the next
-                piece of her workflow to turn into a system.
-              </p>
-            </article>
-          </div>
-        </section>
-
-        {/* WHO IT'S FOR */}
-        <section aria-labelledby="fit-heading" className="border-t border-ops-line/60 py-16 md:py-24">
-          <div className={container}>
-            <Eyebrow>Fit</Eyebrow>
-            <h2 id="fit-heading" className={`mt-4 ${h2Class}`}>
-              Who it’s for
-            </h2>
-
-            <div className="mt-10 grid gap-5 md:grid-cols-2 md:gap-6">
-              <div className={`${cardClass} p-7 md:p-9`}>
-                <div className="flex items-center gap-3">
-                  <NodeDot kind="lime" />
-                  <h3 className={h3Class}>For</h3>
-                </div>
-                <p className="mt-4 text-ops-text">
-                  Owners of small social media, content, or creative agencies who are still the glue between their CRM,
-                  inbox, project board, and calendar. Especially if you’ve been thinking about hiring an ops person or
-                  a VA.
-                </p>
-              </div>
-              <div className="rounded-2xl border border-dashed border-ops-line p-7 md:p-9">
-                <div className="flex items-center gap-3">
-                  <NodeDot kind="ring" />
-                  <h3 className={h3Class}>Not for</h3>
-                </div>
-                <p className="mt-4 text-ops-text">
-                  Anyone looking for ad management or lead generation alone, anyone who won’t share logins and data,
-                  and anyone who wants a guaranteed revenue number.
-                </p>
-              </div>
-            </div>
-          </div>
-        </section>
-
-        {/* FAQ */}
-        <section id="faq" aria-labelledby="faq-heading" className="scroll-mt-20 border-t border-ops-line/60 py-16 md:py-24">
-          <div className={`${container} grid gap-10 lg:grid-cols-12 lg:gap-12`}>
-            <div className="lg:col-span-4">
-              <Eyebrow>FAQ</Eyebrow>
-              <h2 id="faq-heading" className={`mt-4 ${h2Class}`}>
-                Common questions
-              </h2>
-            </div>
-            <div className="border-t border-ops-line/70 lg:col-span-8">
-              {FAQS.map(({ q, a }) => (
-                <details key={q} className="group border-b border-ops-line/70">
-                  <summary className="flex cursor-pointer list-none items-center justify-between gap-6 rounded-md py-5 font-ops-heading text-[17px] font-semibold leading-snug tracking-[-0.01em] text-ops-ink md:text-[19px] [&::-webkit-details-marker]:hidden">
-                    {q}
-                    <span
-                      aria-hidden="true"
-                      className="grid size-8 shrink-0 place-items-center rounded-full border border-ops-line text-ops-moss transition-transform duration-200 group-open:rotate-45"
-                    >
-                      <Plus className="size-4" />
-                    </span>
-                  </summary>
-                  <p className="pb-6 pr-12 text-ops-text">{a}</p>
-                </details>
-              ))}
-            </div>
-          </div>
-        </section>
-
-        {/* FINAL CTA */}
-        <section
-          aria-labelledby="cta-heading"
-          className="ops-dark relative overflow-hidden bg-gradient-to-br from-ops-forest via-[#1f3d31] to-ops-ink"
-        >
-          <CtaCircuit className="pointer-events-none absolute inset-0 h-full w-full" />
-          <div className="relative mx-auto max-w-3xl px-5 py-20 text-center md:px-6 md:py-28">
-            <h2
-              id="cta-heading"
-              className="font-ops-heading text-[34px] font-extrabold leading-[1.08] tracking-[-0.02em] text-ops-cream text-balance md:text-[52px]"
-            >
-              See what I can take off your plate.
-            </h2>
-            <p className="mx-auto mt-5 max-w-xl text-ops-cream/85">
-              Book a 20-minute call. We’ll walk through your week, and you’ll leave knowing the first thing I’d take
-              over. If it’s not a fit, I’ll tell you.
-            </p>
-            <BookButton variant="lime" className="mt-10" />
-          </div>
-        </section>
-
-        {/* FREE AGENCY-OWNER GROUP */}
-        <section id="community" aria-labelledby="community-heading" className="scroll-mt-20 py-16 md:py-20">
-          <div className={container}>
-            <div className={`${cardClass} mx-auto max-w-3xl px-6 pb-12 pt-8 text-center md:px-12 md:pb-14 md:pt-10`}>
-              <CommunityCircuit className="mx-auto h-7 w-[220px]" />
-              <Eyebrow className="mt-6">Free community</Eyebrow>
-              <h2
-                id="community-heading"
-                className="mx-auto mt-4 max-w-xl font-ops-heading text-[26px] font-extrabold leading-[1.18] tracking-[-0.02em] text-ops-ink text-balance md:text-[34px]"
-              >
-                Want to join a free group with other Marketing Agency Owners?
-              </h2>
-              <p className="mt-4 text-ops-text">Sign up here to request a seat. Limited spots available.</p>
-              <a href={COMMUNITY_URL} target="_blank" rel="noopener noreferrer" className={`mt-8 ${btnPrimary}`}>
-                Request a seat
-                <NewTab />
+            <div className="mt-9 flex flex-wrap items-center gap-x-7 gap-y-4">
+              <BookButton />
+              <a href="#how-it-works" className={textLink}>
+                See how it works
+                <ArrowDown className="size-4" aria-hidden="true" />
               </a>
             </div>
-            <p className="mt-6 text-center text-[15px] text-ops-text">
-              Founder, not an agency owner?{" "}
-              <Link href={LINKEDIN_SYSTEMS_URL} className={textLink}>
-                See LinkedIn Content Systems
-                <ArrowRight className="size-4" aria-hidden="true" />
-              </Link>
+          </div>
+        </div>
+
+        <HeroCircuitMobile className="relative block h-[110px] w-full lg:hidden" />
+      </section>
+
+      {/* BRANDS */}
+      <section id="clients" aria-label="Brands I’ve worked with" className="scroll-mt-20">
+        <div className={container}>
+          <LogoStrip
+            heading="Brands I’ve worked with"
+            brands={[
+              BRANDS.closir,
+              BRANDS.lexipol,
+              BRANDS.trileader,
+              BRANDS.nomedic,
+              BRANDS.simplyJess,
+              BRANDS.visualsByJess,
+              BRANDS.becks,
+            ]}
+          />
+        </div>
+      </section>
+
+      {/* PROBLEM */}
+      <section aria-labelledby="problem-heading" className="py-16 md:py-24">
+        <div className={container}>
+          <div className="grid gap-6 lg:grid-cols-12 lg:gap-12">
+            <div className="lg:col-span-6">
+              <Eyebrow>The problem</Eyebrow>
+              <h2 id="problem-heading" className={`mt-4 ${h2Class}`}>
+                Referrals built the firm. They don’t tell anyone else you exist.
+              </h2>
+            </div>
+            <p className="text-ops-text lg:col-span-6 lg:pt-9">
+              Most firms like yours win work through relationships, and that works until the referrals slow down. By the
+              time a new lead reaches out, they’ve usually checked your LinkedIn, your website, and whatever deck got
+              forwarded to them. According to 6sense, B2B buyers are nearly 70% of the way through their decision before
+              they talk to anyone.
             </p>
           </div>
-        </section>
-      </main>
+          <div className="mt-14">
+            <NodeLines items={PROBLEMS} />
+          </div>
+        </div>
+      </section>
 
-      {/* Agent layer: structured data, WebMCP tools for browser agents, and a visible section for HTML-reading agents. */}
-      <AgentJsonLd />
-      <AgentTools />
-      <AgentSection />
+      {/* WHAT I DO */}
+      <section id="what-i-do" aria-labelledby="what-heading" className={sectionClass}>
+        <div className={container}>
+          <div className="max-w-3xl">
+            <Eyebrow>What I do</Eyebrow>
+            <h2 id="what-heading" className={`mt-4 ${h2Class}`}>
+              Someone who thinks alongside you, so you’re not managing one more person.
+            </h2>
+            <p className="mt-5 max-w-2xl text-ops-text">
+              Hiring a marketing coordinator usually means writing the plan and checking the work yourself. I bring the
+              plan, do the work, and tell you honestly what’s working. That buys your time back for the clients.
+            </p>
+          </div>
 
-      <HomeFooter />
-    </div>
+          <div className="mt-12 grid gap-5 md:grid-cols-2 md:gap-6">
+            {ROLE.map((r) => (
+              <article key={r.title} className={`${cardClass} p-7 md:p-9`}>
+                <NodeDot kind={r.node} className={r.node === "lime" ? "ops-pulse" : ""} />
+                <h3 className={`mt-5 ${h3Class}`}>{r.title}</h3>
+                <p className={`mt-3 ${smallBody}`}>{r.body}</p>
+              </article>
+            ))}
+          </div>
+
+          <p className="mt-6 text-[15px] text-ops-text/85">
+            Also handled when you need it: picking an email platform, CRM setup, tracking, and AI where it actually saves
+            time.
+          </p>
+        </div>
+      </section>
+
+      {/* SERVICES */}
+      <section id="services" aria-labelledby="services-heading" className={sectionClass}>
+        <div className={container}>
+          <div className="max-w-3xl">
+            <Eyebrow>Services</Eyebrow>
+            <h2 id="services-heading" className={`mt-4 ${h2Class}`}>
+              One partner, a few specialties.
+            </h2>
+            <p className="mt-5 text-ops-text">
+              Most clients start with the marketing partner role. The others are the same partnership, pointed at a
+              specific problem.
+            </p>
+          </div>
+          <div className="mt-12 grid gap-5 md:grid-cols-2 md:gap-6">
+            {SERVICES.map((s, i) => {
+              const Icon = SERVICE_ICONS[i];
+              return (
+                <article key={s.href} className={`${cardClass} flex flex-col p-7 md:p-9`}>
+                  {i === 0 ? <SproutMark className="h-10 w-10" /> : <Icon className="h-10 w-[88px]" />}
+                  <h3 className={`mt-6 ${h3Class}`}>{s.label}</h3>
+                  <p className={`mt-3 flex-1 ${smallBody}`}>{s.blurb}</p>
+                  <div className="mt-6">
+                    <MoreLink href={s.href}>Learn more</MoreLink>
+                  </div>
+                </article>
+              );
+            })}
+          </div>
+        </div>
+      </section>
+
+      {/* HOW IT WORKS */}
+      <section id="how-it-works" aria-labelledby="how-heading" className={sectionClass}>
+        <div className={container}>
+          <div className="max-w-2xl">
+            <Eyebrow>How it works</Eyebrow>
+            <h2 id="how-heading" className={`mt-4 ${h2Class}`}>
+              A short setup. Then it runs every week.
+            </h2>
+          </div>
+          <div className="mt-14 md:mt-16">
+            <Timeline items={STEPS} colsClass="lg:grid-cols-4" />
+          </div>
+        </div>
+      </section>
+
+      {/* PROOF */}
+      <section id="results" aria-labelledby="results-heading" className={sectionClass}>
+        <div className={container}>
+          <Eyebrow>What clients say</Eyebrow>
+          <h2 id="results-heading" className={`mt-4 ${h2Class}`}>
+            In their words.
+          </h2>
+          <div className="mt-12 grid gap-5 md:grid-cols-[minmax(0,320px)_1fr] lg:gap-6">
+            <figure className={`${cardClass} mx-auto w-full max-w-[340px] overflow-hidden md:max-w-none`}>
+              <video
+                className="aspect-[9/16] w-full bg-ops-ink object-cover"
+                src="/videos/mike-closir-testimonial.mp4"
+                poster="/images/mike-closir-poster.jpg"
+                controls
+                preload="none"
+                playsInline
+              >
+                Your browser does not support the video tag.
+              </video>
+              <figcaption className="p-6">
+                <p className="font-semibold text-ops-ink">Mike Chojnacki</p>
+                <p className="text-[15px] text-ops-text/80">CEO and co-founder, Closir</p>
+              </figcaption>
+            </figure>
+            <div className="flex flex-col gap-5 lg:gap-6">
+              <article className={`${cardClass} p-7 md:p-9`}>
+                <Eyebrow>Closir · Investor relations software</Eyebrow>
+                <p className={`mt-4 ${smallBody}`}>
+                  Mike had the expertise and the client interviews, and no time to turn them into posts. I built a
+                  LinkedIn content system around his own words: five content pillars, a 16-post calendar with hooks and
+                  calls to action, and a post-level tracker so we could see what landed.
+                </p>
+              </article>
+              <PullQuote quote={JESS_QUOTE} name="Jess Marquez" detail="Simply Jess Agency" />
+            </div>
+          </div>
+        </div>
+      </section>
+
+      {/* STANDARDS */}
+      <section aria-labelledby="standards-heading" className={sectionClass}>
+        <div className={`${container} grid gap-10 lg:grid-cols-12 lg:gap-12`}>
+          <div className="lg:col-span-5">
+            <Eyebrow>How I work</Eyebrow>
+            <h2 id="standards-heading" className={`mt-4 ${h2Class}`}>
+              A few rules I hold myself to.
+            </h2>
+          </div>
+          <ul className="grid gap-6 lg:col-span-7">
+            {STANDARDS.map((s, i) => (
+              <li key={i} className="flex gap-4 border-b border-ops-line/60 pb-6 last:border-b-0">
+                <NodeDot kind={i === STANDARDS.length - 1 ? "lime" : "sage"} className="mt-[9px] shrink-0" />
+                <p className="font-medium text-ops-ink">{s}</p>
+              </li>
+            ))}
+          </ul>
+        </div>
+      </section>
+
+      <FitSection
+        forText="Owners and partners of B2B service firms (consultancies, accounting and finance firms, software and tech partners, agencies), roughly 5 to 50 people, growing on referrals, with nobody focused on marketing. Especially if you’d rather have someone think alongside you than someone to manage."
+        notForText="Anyone who wants a guaranteed number of leads next month, daily posting for the sake of volume, or the cheapest option available."
+      />
+
+      <FaqSection faqs={FAQS} />
+
+      <FinalCta
+        title="See what a marketing partner would do first."
+        body="Book a 20-minute call. I’ll tell you what I’d focus on in month one, and if it’s not a fit, I’ll say so."
+      />
+    </OpsPage>
   );
 }

@@ -2,8 +2,32 @@ export const BOOKING_URL = "https://calendar.app.google/55tuHweEBcuJS3B49";
 export const LINKEDIN_URL = "https://www.linkedin.com/in/jack-tygrowth/";
 export const EMAIL = "jack@tygrowth.com";
 
-/* The existing LinkedIn Content Systems page. */
+/* The existing LinkedIn Content Systems page (now redirects to the home page). */
 export const LINKEDIN_SYSTEMS_URL = "/linkedin";
+
+/* Services menu, in order. Used by the header, the footer and the home page. */
+export const SERVICES = [
+  {
+    href: "/services/b2b-marketing-partner",
+    label: "B2B Marketing Partner",
+    blurb: "Your outsourced marketing lead, for firms without one.",
+  },
+  {
+    href: "/services/agency-ops",
+    label: "Agency Ops",
+    blurb: "The back office for marketing agencies, plus builds you can sell.",
+  },
+  {
+    href: "/services/crm-automation",
+    label: "CRM & Automation",
+    blurb: "GoHighLevel, workflows and the technical setup behind your marketing.",
+  },
+  {
+    href: "/agent-ready",
+    label: "AI Agents",
+    blurb: "Business and marketing ops handled by your own AI agent.",
+  },
+] as const;
 
 export const btnPrimaryBase =
   "inline-flex items-center justify-center gap-2 rounded-full bg-ops-ink font-semibold text-ops-cream transition-[background-color,box-shadow] duration-200 hover:bg-ops-forest hover:shadow-[0_0_0_1px_rgba(199,241,124,0.6),0_0_26px_2px_rgba(199,241,124,0.5)]";

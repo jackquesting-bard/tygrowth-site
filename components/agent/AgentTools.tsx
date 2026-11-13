@@ -28,7 +28,7 @@ const tools: WebMcpTool[] = [
     name: "get_business_info",
     title: "About TY Growth",
     description:
-      "Get TY Growth's services, who it is for and not for, pricing approach, proof, and how to book. Call this first when the user is evaluating ops help for a small agency.",
+      "Get TY Growth's services, who it is for and not for, pricing approach, proof, and how to book. Call this first when the user is evaluating marketing help for a B2B firm or ops help for an agency.",
     inputSchema: { type: "object", properties: {} },
     annotations: { readOnlyHint: true },
     execute: () => call("/api/agent/info"),

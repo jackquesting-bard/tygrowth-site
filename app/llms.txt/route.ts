@@ -43,7 +43,10 @@ Browser agents: the home page also registers WebMCP tools (document.modelContext
 Rules: ${agentPolicy.rules.join(" ")}
 
 ## Optional
-- [LinkedIn content systems](${SITE_URL}/linkedin)
+- [B2B Marketing Partner](${SITE_URL}/services/b2b-marketing-partner)
+- [Agency Ops](${SITE_URL}/services/agency-ops)
+- [CRM & Automation](${SITE_URL}/services/crm-automation)
+- [Personal AI agent](${SITE_URL}/agent-ready)
 `;
   return new Response(body, { headers: { "Content-Type": "text/markdown; charset=utf-8" } });
 }

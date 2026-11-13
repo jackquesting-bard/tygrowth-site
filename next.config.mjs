@@ -18,6 +18,15 @@ const nextConfig = {
   images: {
     unoptimized: true,
   },
+  // Work and LinkedIn pages are retired for now; send old links to the home page.
+  // The /holiday page stays live (unlinked) so it can be shared directly.
+  async redirects() {
+    return [
+      { source: "/work", destination: "/", permanent: false },
+      { source: "/linkedin", destination: "/", permanent: false },
+      { source: "/services", destination: "/services/b2b-marketing-partner", permanent: false },
+    ]
+  },
   async headers() {
     return [
       {

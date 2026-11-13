@@ -21,41 +21,63 @@ export const business = {
   email: "jack@tygrowth.com",
   location: "Celebration, FL (works remote)",
   oneLiner:
-    "Back-office and ops partner for small social media, content, and creative agencies. Takes over onboarding, CRM, client tracking, reports, and decks, then turns repeat work into systems, automations, and AI agents.",
+    "Marketing partner for founder-led B2B firms that grow on referrals and have nobody focused on marketing. Finds their best-fit clients, keeps them in front of those buyers, builds the decks and one-pagers that close work, and keeps referral relationships warm. Specialties in agency ops, CRM and automation (GoHighLevel), and AI agents.",
   whoItsFor:
-    "Owners of small social media, content, or creative agencies who are still the glue between their CRM, inbox, project board, and calendar, especially if they have been thinking about hiring an ops person or a VA.",
+    "Owners and partners of B2B service firms (consultancies, accounting and finance firms, software and tech partners, agencies), roughly 5 to 50 people, growing on referrals, with nobody focused on marketing, who would rather have someone think alongside them than someone to manage.",
   notFor: [
-    "Anyone looking for ad management or lead generation alone",
-    "Anyone who won't share logins and data",
-    "Anyone who wants a guaranteed revenue number",
+    "Anyone who wants a guaranteed number of leads next month",
+    "Anyone who wants daily posting for the sake of volume",
+    "Anyone looking for the cheapest option available",
   ],
   services: [
     {
-      id: "agency-back-office",
-      name: "Agency back office, handled",
+      id: "b2b-marketing-partner",
+      name: "B2B Marketing Partner",
       description:
-        "Takes over the ops work eating the owner's week, with one weekly check-in call.",
+        "Outsourced marketing lead for firms without one. Two-week setup (interview, voice guide, review of existing materials, baseline numbers), then a weekly or biweekly check-in and a monthly review. About an hour a week of the owner's time.",
+      includes: [
+        "Best-fit client profile and messaging",
+        "LinkedIn for the owner and the company page",
+        "Monthly email to clients and referral partners, blog posts when they help",
+        "Company deck, service one-pagers, sales letters, and partner-format versions",
+        "Referral partner relationships",
+        "Monthly review with baseline comparisons",
+      ],
+      pricing:
+        "Flat monthly rate scoped on the fit call. Most engagements start around $3,000/month, beginning with a three-month engagement that includes the two-week setup, then month to month by mutual agreement.",
+      url: `${SITE_URL}/services/b2b-marketing-partner`,
+    },
+    {
+      id: "agency-ops",
+      name: "Agency Ops (for marketing agencies)",
+      description:
+        "Takes over the agency owner's back office with one weekly check-in, then builds backend services for the agency's clients under the agency's name (white label, fee split).",
       includes: [
         "Client onboarding and intake forms",
         "CRM setup with every contact in one place",
         "Client tracking and project boards",
         "Content workflows from raw files to scheduled posts",
         "Reports, pitch decks, and strategy docs",
+        "White-label CRM, lead follow-up, win-back, review requests, event and promo messaging for the agency's clients",
       ],
-      pricing: "Flat monthly rate, set on the fit call once the scope is clear.",
+      pricing:
+        "Agency work is a flat monthly rate set on the fit call. Client builds are priced per project and the fee is split with the agency.",
+      url: `${SITE_URL}/services/agency-ops`,
     },
     {
-      id: "white-label-client-builds",
-      name: "Backend services agencies can sell (white label)",
+      id: "crm-automation",
+      name: "CRM & Automation",
       description:
-        "Builds systems for the agency's clients under the agency's name. The agency owns the relationship and the sale; TY Growth builds and runs it and the fee is split.",
+        "Marketing partner with a specialty in GoHighLevel and CRM setup, contact migrations, lead follow-up workflows, win-back campaigns, review requests, multi-brand setups and technical marketing setup.",
       includes: [
-        "CRM and lead follow-up",
-        "Win-back campaigns to past customers",
+        "CRM setup and contact migration",
+        "Lead follow-up, event, reminder and reactivation workflows",
         "Google review requests",
-        "Event and promo messaging by text and email",
+        "Tracking, webhooks and content workflow integrations",
+        "SOPs and walkthroughs for the team",
       ],
-      pricing: "Priced per project; the agency and TY Growth split what the client pays.",
+      pricing: "Fixed price per build phase, scoped after mapping current tools. Ongoing support is a flat monthly rate.",
+      url: `${SITE_URL}/services/crm-automation`,
     },
     {
       id: "personal-agent",
@@ -73,43 +95,19 @@ export const business = {
       pricing: "Depends on the tasks and tools. Email jack@tygrowth.com for details.",
       url: `${SITE_URL}/agent-ready`,
     },
-    {
-      id: "holiday-campaign",
-      name: "Black Friday campaign for local businesses",
-      description:
-        "Holiday campaign for local businesses with a customer list, built and launched in 72 hours: one email, three texts to opted-in customers, a gift card promo, three social posts and a Google Business post.",
-      includes: [
-        "Holiday email",
-        "Three texts (teaser, launch, last call) if the business already texts customers, otherwise a second email",
-        "Gift card promo and counter sign copy",
-        "Three social posts",
-        "Google Business post",
-      ],
-      pricing:
-        "$497 flat, or $697 with a local Meta ad boost (ad spend paid by the client directly to Meta). Paid upfront. Live before Black Friday (Nov 27, 2026) or full refund. Book by Nov 20. Texts only for businesses that already have an approved texting tool; otherwise a second email.",
-      url: `${SITE_URL}/holiday`,
-    },
-    {
-      id: "linkedin-content-systems",
-      name: "LinkedIn content systems (for founders and execs)",
-      description:
-        "Secondary offer for B2B founders and executives who want LinkedIn content built from their own expertise.",
-      includes: ["Content audit", "Weekly capture call", "Posts for personal profile and company page"],
-      pricing: "Monthly retainer, scoped on a call.",
-      url: `${SITE_URL}/linkedin`,
-    },
   ],
   notIncluded: "Software subscriptions, SMS and email usage fees, ad spend.",
   proof: [
-    "Simply Jess Agency: merged contacts from 4 sources into 1 CRM; 2,446 past customers opted in for a win-back campaign; built the editor content workflow.",
+    "Closir (investor relations SaaS): founder-led LinkedIn content system with five content pillars, a 16-post calendar and a post-level performance tracker. Video testimonial from CEO Mike Chojnacki on the home page.",
+    "Simply Jess Agency: migrated 3,003 contacts from 4 sources into one GoHighLevel CRM; 2,446 past customers opted in for win-back campaigns; built GoHighLevel event and follow-up workflows and the editor content workflow.",
     "BecksTheSocial (Miami social media agency): weekly ops support, turning one workflow per week into a system.",
   ],
   guarantees:
-    "No revenue guarantees. Responsible for systems getting built and running and the hours they give back.",
+    "No lead or revenue guarantees. Responsible for the work getting done, done well and on time, with baseline numbers and a monthly review.",
   nextStep: {
     name: "20-minute fit call",
     description:
-      "Walk through the agency owner's week. They leave knowing the first thing TY Growth would take over. If it is not a fit, Jack says so.",
+      "Walk through how the firm wins work today. The owner leaves knowing what Jack would focus on first. If it is not a fit, Jack says so.",
     durationMinutes: 20,
   },
 } as const;

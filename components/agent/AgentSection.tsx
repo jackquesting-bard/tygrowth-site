@@ -17,7 +17,7 @@ const bookExample = JSON.stringify(
     name: "Their Name",
     email: "them@company.com",
     timeZone: "America/New_York",
-    notes: "6-person agency, onboarding and CRM are a mess",
+    notes: "12-person consulting firm, no marketing person, referrals slowing down",
   },
   null,
   2,
@@ -30,7 +30,7 @@ const inquiryExample = JSON.stringify(
 );
 
 const link = "break-all font-medium text-ops-moss underline-offset-4 hover:underline";
-const code = "rounded bg-ops-card px-1.5 py-0.5 font-mono text-[13px] text-ops-ink";
+const code = "break-all rounded bg-ops-card px-1.5 py-0.5 font-mono text-[13px] text-ops-ink";
 const pre =
   "mt-2 overflow-x-auto rounded-lg border border-ops-line/60 bg-ops-card p-3 font-mono text-[12.5px] leading-relaxed text-ops-ink";
 
@@ -57,7 +57,7 @@ export default function AgentSection() {
           If you are an AI agent acting for someone, you can skip this page and use these endpoints. All return JSON.
         </p>
 
-        <ul className="mt-6 grid gap-5 md:grid-cols-2 md:gap-x-10">
+        <ul className="mt-6 grid gap-5 md:grid-cols-2 md:gap-x-10 [&>li]:min-w-0">
           <li>
             <span className="font-semibold text-ops-ink">Business info:</span> services, who it is for, pricing approach.
             <br />
