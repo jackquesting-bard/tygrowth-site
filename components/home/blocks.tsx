@@ -180,11 +180,14 @@ export function PullQuote({
 
 export type Brand = {
   name: string;
-  href: string;
+  /** Leave out when the brand has no public site; the logo then shows without a link. */
+  href?: string;
   /** Single-color transparent PNG in /public/logos/brands/. Leave out to show the name as text. */
   logo?: { src: string; width: number; height: number };
   /** Tailwind height class, so wide and tall marks look the same size. */
   size?: string;
+  /** Show the name next to the logo, for icon-only marks. */
+  withName?: boolean;
 };
 
 export const BRANDS: Record<string, Brand> = {
@@ -228,7 +231,100 @@ export const BRANDS: Record<string, Brand> = {
     name: "BecksTheSocial",
     href: "https://www.instagram.com/becksthesocial/",
   },
+  easternFulfillment: {
+    name: "Eastern Fulfillment",
+    href: "https://www.easternfulfillment.com/",
+    logo: { src: "/logos/brands/eastern-fulfillment.png", width: 214, height: 256 },
+    size: "h-9 md:h-10",
+    withName: true,
+  },
+  specops: {
+    name: "SpecOps.AI",
+    href: "https://specops.ai/",
+    logo: { src: "/logos/brands/specops.png", width: 1208, height: 229 },
+    size: "h-6 md:h-7",
+  },
+  successMappers: {
+    name: "Success Mappers",
+    href: "https://www.successmappers.com/",
+    logo: { src: "/logos/brands/success-mappers.png", width: 272, height: 130 },
+    size: "h-10 md:h-11",
+  },
+  backgammonCash: {
+    name: "Backgammon Cash",
+    href: "https://www.backgammon-cash.com/",
+    logo: { src: "/logos/brands/backgammon-cash.png", width: 256, height: 256 },
+    size: "h-10 md:h-11",
+    withName: true,
+  },
+  luzMac: {
+    name: "Luz Mac Stories",
+    logo: { src: "/logos/brands/luz-mac-stories.png", width: 256, height: 256 },
+    size: "h-10 md:h-11",
+    withName: true,
+  },
 };
+
+/** One brand: logo, logo plus name, or name only. Links out when the brand has a site. */
+function BrandMark({ b, hidden = false }: { b: Brand; hidden?: boolean }) {
+  const name = (
+    <span className="block whitespace-nowrap font-ops-heading text-[20px] font-semibold tracking-[-0.01em] text-ops-text md:text-[22px]">
+      {b.name}
+    </span>
+  );
+  const inner = b.logo ? (
+    <span className="flex items-center gap-3">
+      <Image
+        src={b.logo.src}
+        alt={hidden ? "" : `${b.name} logo`}
+        width={b.logo.width}
+        height={b.logo.height}
+        className={`w-auto ${b.size ?? "h-10"}`}
+      />
+      {b.withName && name}
+    </span>
+  ) : (
+    <span role={hidden ? undefined : "img"} aria-label={hidden ? undefined : `${b.name} logo`}>
+      {name}
+    </span>
+  );
+  if (!b.href) return <span className="block">{inner}</span>;
+  return (
+    <a
+      href={b.href}
+      target="_blank"
+      rel="noopener noreferrer"
+      tabIndex={hidden ? -1 : undefined}
+      className="block rounded-md transition-opacity duration-200 hover:opacity-70"
+    >
+      {inner}
+      {!hidden && <span className="sr-only"> (opens in a new tab)</span>}
+    </a>
+  );
+}
+
+/** Logos scrolling slowly right to left. Pauses on hover; sits still and wraps for reduced motion. */
+export function LogoMarquee({ heading, brands }: { heading: string; brands: Brand[] }) {
+  return (
+    <div className="border-y border-ops-line/60 py-10 text-center md:py-12">
+      <h2 className="text-[13px] font-semibold uppercase tracking-[0.12em] text-ops-moss">{heading}</h2>
+      <div className="ops-marquee mt-8">
+        <ul className="ops-marquee-track flex w-max items-center">
+          {brands.map((b) => (
+            <li key={b.name} className="shrink-0 px-7 md:px-9">
+              <BrandMark b={b} />
+            </li>
+          ))}
+          {brands.map((b) => (
+            <li key={`${b.name}-dup`} aria-hidden="true" data-dup className="shrink-0 px-7 md:px-9">
+              <BrandMark b={b} hidden />
+            </li>
+          ))}
+        </ul>
+      </div>
+    </div>
+  );
+}
 
 export function LogoStrip({
   heading,
@@ -245,31 +341,7 @@ export function LogoStrip({
       <ul className="mt-8 flex flex-wrap items-center justify-center gap-x-10 gap-y-8 lg:gap-x-11">
         {brands.map((b) => (
           <li key={b.name}>
-            <a
-              href={b.href}
-              target="_blank"
-              rel="noopener noreferrer"
-              className="block rounded-md transition-opacity duration-200 hover:opacity-70"
-            >
-              {b.logo ? (
-                <Image
-                  src={b.logo.src}
-                  alt={`${b.name} logo`}
-                  width={b.logo.width}
-                  height={b.logo.height}
-                  className={`w-auto ${b.size ?? "h-10"}`}
-                />
-              ) : (
-                <span
-                  role="img"
-                  aria-label={`${b.name} logo`}
-                  className="block whitespace-nowrap font-ops-heading text-[20px] font-semibold tracking-[-0.01em] text-ops-text md:text-[22px]"
-                >
-                  {b.name}
-                </span>
-              )}
-              <span className="sr-only"> (opens in a new tab)</span>
-            </a>
+            <BrandMark b={b} />
           </li>
         ))}
       </ul>

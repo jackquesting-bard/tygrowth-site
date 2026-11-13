@@ -26,8 +26,7 @@ import { textLink } from "@/components/home/shared";
 
 /* =====================================================================
    Services: B2B Marketing Partner. The main offer.
-   The three examples are real firms I've scoped work with, kept
-   anonymous until they agree to be named.
+   Add case studies here once client work has results to show.
    ===================================================================== */
 
 export const metadata: Metadata = {
@@ -42,43 +41,6 @@ const SIGNS = [
   "You’ve hired freelancers before, and you ended up writing the plan and checking every draft yourself.",
   "Your deck, one-pagers and website say what you did three years ago, and leads have already read them.",
   "You keep explaining the same things one client at a time, when it could reach everyone at once.",
-];
-
-type Example = { firm: string; situation: string; needed: string[] };
-
-const EXAMPLES: Example[] = [
-  {
-    firm: "A software consulting firm, about 15 people",
-    situation:
-      "Fifteen years in the industry, growing on referrals and partner introductions. LinkedIn had been quiet for months and the company page had never posted. The owner wanted the firm known by clients, partners, and the people he’d like to hire next.",
-    needed: [
-      "Interview and a voice guide, so every draft sounds like him",
-      "Updated company deck and service one-pagers first, since leads read those before the call",
-      "A version of the deck that follows a software vendor’s partner format",
-      "LinkedIn for the owner and the company page, plus two blog posts a month",
-      "Topic ideas from industry news at every check-in, and starting numbers to measure against",
-    ],
-  },
-  {
-    firm: "A fractional CFO firm",
-    situation:
-      "Built to put a CFO in the seat for founder-led businesses. Strong reputation, nobody focused on marketing, and most clients arriving through relationships.",
-    needed: [
-      "Steady LinkedIn posts built from the founder’s own voice guide",
-      "A simple monthly email to clients and referral partners",
-      "A short monthly report on what’s working",
-    ],
-  },
-  {
-    firm: "A company running several brands",
-    situation:
-      "One owner, several brands, and marketing spread across different tools and people. He wanted one person who could advise across all of them and build the systems underneath.",
-    needed: [
-      "A marketing partner and advisor across every brand",
-      "CRM and GoHighLevel builds so each brand’s leads get followed up",
-      "One view of what’s working, brand by brand",
-    ],
-  },
 ];
 
 const INCLUDED = [
@@ -217,8 +179,8 @@ export default function B2BMarketingPartnerPage() {
         actions={
           <>
             <BookButton />
-            <a href="#examples" className={textLink}>
-              See examples
+            <a href="#included" className={textLink}>
+              See what’s included
               <ArrowDown className="size-4" aria-hidden="true" />
             </a>
           </>
@@ -258,36 +220,6 @@ export default function B2BMarketingPartnerPage() {
           </div>
           <div className="mt-14">
             <NodeLines items={SIGNS} />
-          </div>
-        </div>
-      </section>
-
-      {/* EXAMPLES */}
-      <section id="examples" aria-labelledby="examples-heading" className={sectionClass}>
-        <div className={container}>
-          <div className="max-w-3xl">
-            <Eyebrow>What it looks like</Eyebrow>
-            <h2 id="examples-heading" className={`mt-4 ${h2Class}`}>
-              Same role, shaped around each firm.
-            </h2>
-            <p className="mt-5 text-ops-text">
-              Here’s how it’s come together for a few firms I’ve scoped work with recently. Names stay private until
-              they’re happy to be listed.
-            </p>
-          </div>
-
-          <div className="mt-12 grid gap-5 lg:grid-cols-3 lg:gap-6">
-            {EXAMPLES.map((ex) => (
-              <article key={ex.firm} className={`${cardClass} flex flex-col p-7 md:p-8`}>
-                <NodeDot kind="lime" className="ops-pulse" />
-                <h3 className={`mt-5 ${h3Class}`}>{ex.firm}</h3>
-                <p className={`mt-3 ${smallBody}`}>{ex.situation}</p>
-                <div className={`mt-6 border-t border-ops-line/60 pt-6 ${smallBody}`}>
-                  <Eyebrow className="mb-4">What they needed</Eyebrow>
-                  <BulletList items={ex.needed} />
-                </div>
-              </article>
-            ))}
           </div>
         </div>
       </section>

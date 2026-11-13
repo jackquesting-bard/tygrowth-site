@@ -10,7 +10,7 @@ import {
   FaqSection,
   FinalCta,
   FitSection,
-  LogoStrip,
+  LogoMarquee,
   MoreLink,
   NodeLines,
   OpsPage,
@@ -219,16 +219,22 @@ export default function HomePage() {
       {/* BRANDS */}
       <section id="clients" aria-label="Brands I’ve worked with" className="scroll-mt-20">
         <div className={container}>
-          <LogoStrip
+          {/* Add new client logos here (and their files in /public/logos/brands/). */}
+          <LogoMarquee
             heading="Brands I’ve worked with"
             brands={[
               BRANDS.closir,
               BRANDS.lexipol,
+              BRANDS.simplyJess,
+              BRANDS.easternFulfillment,
               BRANDS.trileader,
               BRANDS.nomedic,
-              BRANDS.simplyJess,
+              BRANDS.backgammonCash,
               BRANDS.visualsByJess,
+              BRANDS.specops,
+              BRANDS.successMappers,
               BRANDS.becks,
+              BRANDS.luzMac,
             ]}
           />
         </div>
